@@ -1,0 +1,2 @@
+Coefficient for Latent Risk Score (PROB_LATENT_RISK): 3.6737
+Note: A large positive coefficient indicates strong predictive power for the auxiliary risk score.

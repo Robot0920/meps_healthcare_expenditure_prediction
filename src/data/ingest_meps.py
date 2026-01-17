@@ -23,7 +23,7 @@ FILES_TO_DOWNLOAD = {
         {"id": "h183", "label": "Panel 19 (2014-2015)"},
         {"id": "h193", "label": "Panel 20 (2015-2016)"},
         {"id": "h202", "label": "Panel 21 (2016-2017)"},
-        {"id": "h212", "label": "Panel 22 (2017-2018)"}
+        {"id": "h209", "label": "Panel 22 (2017-2018)"}
     ],
     # Event Files (Needed for Opioid & Mental Health Specifics)
     # We download the corresponding years for the panels above.
