@@ -2,7 +2,7 @@
 
 ## 📌 Project Overview
 **Title:** Identifying Latent High-Cost Risk: A Two-Stage Modeling Approach
-**Scope:** Senior Data Science Capstone / XN Project for ALY6980
+
 **Data Source:** Medical Expenditure Panel Survey (MEPS) Longitudinal Data [Panels 18-23, Years 2013-2019]
 
 ### 🎯 Objective
@@ -40,7 +40,7 @@ healthcare_repo/
 └── README.md           # Project Documentation
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Environment Setup
 ```bash
@@ -68,11 +68,11 @@ The project logic is encapsulated in sequential Jupyter Notebooks:
     *   Trains and compares Baseline, Adjusted, and XGBoost models.
     *   Exports final performance metrics and ROC curves.
 
-## 📊 Key Results
+##  Key Results
 *   **Sensitivity Win:** The Latent-Adjusted Model captures **72%** of future high-cost patients, compared to only **30%** by standard XGBoost.
 *   **Strong Signal:** The engineered `PROB_LATENT_RISK` feature has a coefficient of **3.67**, making it the strongest single predictor of future risk after controlling for age and disease history.
 
-## 🔮 Future Directions
+##  Future Directions
 *   **Ensemble Stacking:** Combining the precision of XGBoost with the high recall of the Linear Model.
 *   **Time-Series Deep Learning:** Utilizing LSTM/RNNs on granular medication purchase sequences (using raw MEPS event files) to model trajectory dynamics.
 
