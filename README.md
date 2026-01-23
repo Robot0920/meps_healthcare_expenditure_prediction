@@ -93,5 +93,4 @@ We adopt a **Recall-First (Cost-Sensitive)** strategy.
 *   **Time-Series Deep Learning:** Utilizing LSTM/RNNs on granular medication purchase sequences (using raw MEPS event files) to model trajectory dynamics.
 
 ---
-**Author:** Group 5 Capstone Team
-**License:** MIT
+
