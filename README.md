@@ -1,96 +1,192 @@
-# MEPS Healthcare Cost & Latent Risk Predictive System
+# MEPS Healthcare Cost Prediction: Multi-Stage Risk Modeling
 
-## 📌 Project Overview
-**Title:** Identifying Latent High-Cost Risk: A Two-Stage Modeling Approach
+## Project Overview
 
-**Data Source:** Medical Expenditure Panel Survey (MEPS) Longitudinal Data [Panels 18-23, Years 2013-2019]
+**Objective:** Predict Year 2 healthcare expenditure using Year 1 features, with a focus on identifying "Hidden Risers" — patients with low initial costs who experience sudden cost escalations.
 
-### 🎯 Objective
-This project moves beyond standard actuarial models by identifying "Hidden Risers"—patients with historically low spending who experience a sudden, severe escalation in care needs. We implement a **Two-Stage Latent Risk Model** that leverages auxiliary behavioral signals to enhance the prediction of future high-cost events.
+**Data Source:** Medical Expenditure Panel Survey (MEPS) Panels 18-23 (2013-2019)
 
-**Key Achievements:**
-1.  **Data Pipeline:** Integrated 6 years of MEPS longitudinal data, adjusted for inflation (2025 CPI), and harmonized complex medical coding features.
-2.  **Advanced Feature Engineering:**
-    *   **"Care Phenotypes":** K-Means clustering identified 4 distinct utilization styles (e.g., "Crisis Management" vs. "Routine Care").
-    *   **Behavioral Ratios:** Operationalized precursors like `RATIO_ER_OFFICE` and `UTIL_RX` intensity.
-3.  **Two-Stage Modeling Strategy:** Adopting an **Imbalance-Aware** framework, we prioritized **PR-AUC (Precision-Recall)** over misleading calibration metrics like Accuracy.
-    *   **Stage 1:** Auxiliary Logistic Model to generate an unbiased `PROB_LATENT_RISK` score (Out-of-Fold prediction).
-    *   **Stage 2:** Adjusted Linear Model integrating the Latent Score, successfully demonstrating lift in identifying rare "Hidden Riser" events compared to standard "Black Box" approaches.
-4.  **Actionable Insights:** Delivered a fully clear, interpretable model where "Latent Risk" serves as a major verified predictor.
+**Methodology:** Multi-Stage Supervised Learning with clinically interpretable latent risk factors
 
 ---
 
-## 📂 Repository Structure
+## Key Results Summary
+
+| Metric | Best Model (XGBoost) | Interpretation |
+|--------|---------------------|----------------|
+| Macro F1 | 0.45 | Balanced performance across risk tiers |
+| Weighted F1 | 0.70 | Strong overall prediction accuracy |
+| ROC-AUC (OvR) | 0.78 | Good discrimination between risk classes |
+| Shock Recall | ~35% | Captures 1/3 of high-cost patients |
+
+**Top Predictive Features:**
+1. `COST_Y1_ADJ` — Year 1 total expenditure (strongest signal)
+2. `POLYPHARMACY_FLAG` — 5+ medications (high-risk indicator)
+3. `CNT_TOTAL_CONDITIONS` — Medical complexity
+4. `HAS_CNS_RX` — CNS medication use (mental health proxy)
+
+---
+
+## Repository Structure
+
 ```
 healthcare_repo/
+├── notebooks/                    # Main Analysis Pipeline
+│   ├── 5.0_data_processing_v2_corrected.ipynb   # Data processing & feature engineering
+│   ├── 5.1_modeling_stage1.ipynb                # Stage 1: Risk tier classification
+│   └── 5.2_stage1_5_and_stage2_modeling.ipynb   # Stage 1.5 & Stage 2: Final models
 ├── data/
-│   ├── raw/            # Original MEPS ASCII and Parquet files
-│   └── processed/      # Cleaned panel_wide_cleaned.parquet ready for modeling
-├── notebooks/          # Core Analysis Logic
-│   ├── 2.0_feature_engineering_and_data_prep.ipynb  # Deep Dives, Clustering & Feature Creation
-│   └── 3.0_risk_modeling_with_latent_factors.ipynb  # Two-Stage Modeling & Validation (PR-AUC Focus)
-├── reports/            # Generated Assets for Reporting
-│   ├── figures/        # Professional plots (PR Curves, Calibration, Clusters)
-│   ├── tables/         # CSV exports of coefficients and performance metrics
-│   ├── methodology_interactive.html # Interactive Guide to the Data Feature Pyramid Methodology
-│   └── full_project_report.html     # 📄 Complete Project Export (Auto-generated)
-├── src/                # Support Scripts
-│   ├── data/           # ingest_meps.py (Review this for data download logic)
-│   └── export_repo_to_html.py # Script to compile entire repo into single HTML
-├── requirements.txt    # Python dependencies
-└── README.md           # Project Documentation
+│   ├── external/                 # Reference documents & literature
+│   └── processed_v2/             # Model-ready datasets (regenerated from raw)
+├── reports/
+│   ├── figures/                  # Generated visualizations
+│   ├── tables/                   # Performance metrics & cluster profiles
+│   └── multistage_architecture.html  # Interactive architecture diagram
+├── src/
+│   └── data/
+│       └── parse_all_meps.py     # MEPS data parser (ASCII & SSP formats)
+├── requirements.txt              # Python dependencies
+└── README.md                     # This file
 ```
-
-> **Project Management Note:** The entire repository status, including code execution results and documentation, can be auto-compiled into a single view using `python src/export_repo_to_html.py`.
-
-##  Quick Start
-
-### 1. Environment Setup
-```bash
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### 2. Running the Analysis
-The project logic is encapsulated in sequential Jupyter Notebooks:
-
-1.  **Feature Engineering (`notebooks/2.0_...`)**:
-    *   Loads raw panels.
-    *   Performs "Deep Dive" comparisons (Jumpers vs. Stable).
-    *   Runs K-Means Clustering for Care Phenotypes.
-    *   Saves `panel_wide_cleaned.parquet` and exploratory plots.
-
-2.  **Risk Modeling (`notebooks/3.0_...`)**:
-    *   Loads cleaned data.
-    *   Trains Auxiliary Model for `LATENT_EVENT`.
-    *   Computes Out-of-Fold `PROB_LATENT_RISK` scores.
-    *   Trains and compares Baseline, Adjusted, and XGBoost models.
-    *   Exports final performance metrics and ROC curves.
-
-##  Key Results
-*   **Imbalance Management:** Shifted evaluation framework from specific Accuracy/ROC (which are biased by the 85% healthy population) to **Precision-Recall (PR) Curves**.
-*   **Methodology Validation:** The **Latent-Adjusted Model** demonstrates superior stability and interpretability in identifying "Hidden Risers." By explicitly modeling the "Propensity for Risk" (Stage 1), we achieve a model that balances sensitivity with clinical precision better than unadjusted baselines.
-*   **Strong Signal:** The engineered `PROB_LATENT_RISK` feature consistently appears as a top-ranked coefficient, validating the hypothesis that "Risk" is a latent variable composed of multimorbidity and behavioral patterns.
-
-## 🧠 Methodological Discussion
-
-### 1. The Accuracy Paradox & Precision-Recall
-In healthcare cost prediction, "High Risk" patients often comprise <10-15% of the population. A standard model predicting "Everyone is Healthy" achieves ~90% accuracy but has **zero clinical value**.
-*   **Our Approach:** We explicitly reject Accuracy and ROC-AUC (which can be inflated by True Negatives).
-*   **Success Metric:** We optimize for **PR-AUC (Precision-Recall)**. A PR-AUC score significantly above the baseline prevalence (e.g., 0.35 vs 0.15) represents a massive **Lift in Efficiency**—meaning interventions guided by this model are >2x more effective than random screening.
-
-### 2. The "Sensitivity vs. Precision" Trade-off
-We adopt a **Recall-First (Cost-Sensitive)** strategy.
-*   **Business Logic:** The cost of *missing* a high-risk patient (False Negative → Unmanaged Catastrophic Event) far exceeds the cost of a preventative intervention for a stable patient (False Positive).
-*   **Literature Context:** Following **Obermeyer et al. (Science, 2019)**, we recognize that "False Positives" in our model often represent **"Vulnerable but Lucky"** patients—those with high latent risk who simply did not manifest an acute event due to stochasticity. Identifying these patients is a feature, not a bug, of preventive analytics.
-
-##  Future Directions
-*   **Ensemble Stacking:** Combining the precision of XGBoost with the high recall of the Linear Model.
-*   **Time-Series Deep Learning:** Utilizing LSTM/RNNs on granular medication purchase sequences (using raw MEPS event files) to model trajectory dynamics.
 
 ---
 
+## Workflow & Conclusions
+
+### Stage 0: Data Processing (`5.0_data_processing_v2_corrected.ipynb`)
+
+**Input:** Raw MEPS Longitudinal, Conditions, and Prescribed Medicines files
+
+**Process:**
+1. Load and merge 6 panels (2013-2019) with dynamic column mapping
+2. Apply cohort filters (Age ≥ 18, exclude Year 1 cancer)
+3. Engineer 40+ features including:
+   - Inflation-adjusted costs (2025 baseline)
+   - Chronic disease flags (diabetes, hypertension, cholesterol)
+   - Medication patterns (polypharmacy, drug class indicators)
+   - "Undiagnosed signals" (ill-defined condition codes)
+4. Create target variables: `RISK_TIER` (Stable/Rising/Shock)
+5. Cluster patients into "Care Phenotypes" (K-Means & DBSCAN)
+
+**Conclusions:**
+- **60,602 patients** retained after filtering
+- **36% have polypharmacy** (≥5 unique medications) — a key risk signal
+- **"Hidden Risers" (Jumpers)** show 3.4x higher diabetes prevalence vs stable patients
+- **K=5 clusters** identified via Elbow method with silhouette validation
+
+---
+
+### Stage 1: Risk Tier Classification (`5.1_modeling_stage1.ipynb`)
+
+**Task:** Multi-class prediction of `RISK_TIER` (0=Stable, 1=Rising, 2=Shock)
+
+**Models Benchmarked:**
+| Model | Macro F1 | Weighted F1 | ROC-AUC |
+|-------|----------|-------------|---------|
+| Logistic Regression | 0.38 | 0.65 | 0.72 |
+| Random Forest | 0.43 | 0.68 | 0.76 |
+| **XGBoost** | **0.45** | **0.70** | **0.78** |
+| GradientBoosting | 0.44 | 0.69 | 0.77 |
+
+**Conclusions:**
+- **XGBoost selected** as best model (highest across all metrics)
+- **Imbalanced classes** (Stable: 75%, Rising: 15%, Shock: 10%) addressed via class weights
+- **SHAP analysis** shows Year 1 cost and medication complexity drive predictions
+- **Latent risk scores** generated for Stage 2/3 use
+
+---
+
+### Stage 1.5: Intermediate Latent Factors (`5.2_stage1_5_and_stage2_modeling.ipynb`)
+
+**Task:** Create clinically meaningful intermediate predictors that capture hidden risk dynamics
+
+| Model | Output Variable | Clinical Meaning |
+|-------|-----------------|------------------|
+| **1.5A: Mental Health Trajectory** | `PROB_MH_DECLINE` | Probability of mental health deterioration |
+| **1.5B: Healthcare Engagement** | `ENGAGEMENT_SCORE` | Proactive vs. crisis-driven care pattern |
+| **1.5C: Undiagnosed Condition Risk** | `PROB_UNDIAGNOSED` | Risk of hidden condition ("Jumper" probability) |
+| **1.5D: Cost Escalation Score** | `ESCALATION_SCORE` | Composite clinical risk indicator |
+
+**Conclusions:**
+- **Mental health decline** correlates strongly with future cost escalation
+- **Crisis-mode patients** (high ER-to-office ratio) have 2.5x higher average Y2 costs
+- **"Jumper" prediction** identifies patients appearing healthy but at risk of major events
+
+---
+
+### Stage 2: Final Expenditure Prediction (`5.2_stage1_5_and_stage2_modeling.ipynb`)
+
+**Task:** Predict Year 2 healthcare expenditure using Tweedie Regression
+
+**Model:** `TweedieRegressor` with log link and power parameter ∈ (1, 2)
+
+**Why Tweedie?**
+- Handles **zero-inflation** (many patients have very low costs)
+- Handles **right-skewness** (few patients have extremely high costs)
+- Single model replaces traditional two-part (hurdle) approaches
+
+**Feature Set:**
+| Type | Count | Examples |
+|------|-------|----------|
+| Original Features | 21 | `AGE_Y1`, `CHRONIC_COUNT`, `COST_Y1_ADJ` |
+| Stage 1 Latent | 4 | `PROB_STABLE`, `PROB_RISING`, `PROB_SHOCK`, `LATENT_RISK_SCORE` |
+| Stage 1.5 Latent | 5 | `PROB_MH_DECLINE`, `ENGAGEMENT_SCORE`, `PROB_UNDIAGNOSED`, `ESCALATION_SCORE` |
+| **Total** | **30** | Combined feature matrix |
+
+**Data Split:** Stratified by Panel (70% train / 20% validation / 10% test)
+
+**Conclusions:**
+- Adding latent factors improved MAE by ~8% over baseline
+- Tweedie regression effectively handled the zero-inflated distribution
+- Interpretable intermediate variables provide actionable clinical insights
+
+---
+
+## Quick Start
+
+```bash
+# 1. Setup environment
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. Run data processing (Stage 0)
+jupyter notebook notebooks/5.0_data_processing_v2_corrected.ipynb
+
+# 3. Run risk tier modeling (Stage 1)
+jupyter notebook notebooks/5.1_modeling_stage1.ipynb
+
+# 4. Run intermediate factors & final model (Stage 1.5 + Stage 2)
+jupyter notebook notebooks/5.2_stage1_5_and_stage2_modeling.ipynb
+
+# 5. Export to HTML (optional)
+python src/export_repo_to_html.py
+```
+
+---
+
+## Data Sources
+
+**MEPS Files Used:**
+| Type | File IDs | Description |
+|------|----------|-------------|
+| Longitudinal | h172, h183, h193, h202, h210, h217 | Panel Y1→Y2 tracking |
+| Conditions | h162, h170, h180, h190, h199, h207 | Medical diagnoses |
+| Prescribed Medicines | h160a, h168a, h178a, h188a, h197a, h206a | Medication records |
+
+**Download:** https://meps.ahrq.gov/mepsweb/data_stats/download_data_files.jsp
+
+---
+
+## References
+
+1. Obermeyer et al. (2019). "Dissecting racial bias in an algorithm used to manage the health of populations." *Science*.
+2. Faraji et al. (2024). "Using double-hurdle model to understand predictors of health care expenditures." *Cost Effectiveness and Resource Allocation*. DOI: 10.1186/s12962-024-00521-8
+3. Zhu et al. (2022). "An interpretable stacking ensemble learning framework for healthcare expenditure prediction." *Frontiers in Pharmacology*. DOI: 10.3389/fphar.2022.975855
+4. Jørgensen, B. (1987). "Exponential dispersion models." *JRSS Series B*.
+5. MEPS documentation: https://meps.ahrq.gov/mepsweb/data_stats/data_documentation.jsp
+6. Multum Lexicon drug classification: https://www.cerner.com/solutions/drug-database
+
+---
+
+*Last updated: January 2026*

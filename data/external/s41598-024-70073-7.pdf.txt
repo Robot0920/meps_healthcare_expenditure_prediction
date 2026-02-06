@@ -1,0 +1,562 @@
+1
+Vol.:(0123456789)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports
+Innovation and challenges 
+of artificial intelligence technology 
+in personalized healthcare
+Yu‑Hao Li 2, Yu‑Lin Li 1, Mu‑Yang Wei 1 & Guang‑Yu Li 1*
+As the burgeoning field of Artificial Intelligence (AI) continues to permeate the fabric of healthcare, 
+particularly in the realms of patient surveillance and telemedicine, a transformative era beckons. 
+This manuscript endeavors to unravel the intricacies of recent AI advancements and their profound 
+implications for reconceptualizing the delivery of medical care. Through the introduction of 
+innovative instruments such as virtual assistant chatbots, wearable monitoring devices, predictive 
+analytic models, personalized treatment regimens, and automated appointment systems, AI is not 
+only amplifying the quality of care but also empowering patients and fostering a more interactive 
+dynamic between the patient and the healthcare provider. Yet, this progressive infiltration of AI into 
+the healthcare sphere grapples with a plethora of challenges hitherto unseen. The exigent issues of 
+data security and privacy, the specter of algorithmic bias, the requisite adaptability of regulatory 
+frameworks, and the matter of patient acceptance and trust in AI solutions demand immediate and 
+thoughtful resolution .The importance of establishing stringent and far‑reaching policies, ensuring 
+technological impartiality, and cultivating patient confidence is paramount to ensure that AI‑driven 
+enhancements in healthcare service provision remain both ethically sound and efficient. In conclusion, 
+we advocate for an expansion of research efforts aimed at navigating the ethical complexities inherent 
+to a technology‑evolving landscape, catalyzing policy innovation, and devising AI applications that 
+are not only clinically effective but also earn the trust of the patient populace. By melding expertise 
+across disciplines, we stand at the threshold of an era wherein AI’s role in healthcare is both ethically 
+unimpeachable and conducive to elevating the global health quotient.
+Keywords Artificial intelligence, Healthcare, Virtual assistant chatbots, Remote patient care, Data security
+Artificial Intelligence (AI), a burgeoning domain within computer science, is increasingly being harnessed to 
+execute tasks that demand human-like intelligence, such as solving complex problems, logical reasoning, and 
+conducting learning analysis based on voluminous data sets. In the realm of healthcare, AI’s significance cannot 
+be overstated, particularly in areas like patient monitoring and telemedicine where it is driving transformative 
+ breakthroughs1. One of the most dynamic frontiers within AI in healthcare is the swift evolution of Natural 
+Language Processing (NLP) algorithms. These sophisticated tools are capable of deciphering and comprehend-
+ing human language, a skill that has profound implications for patient care. When applied to analyze symptoms 
+narrated by patients, NLP can facilitate more natural and effective communication, thereby enhancing patient 
+engagement and elevating the overall telemedicine  experience2. Another significant milestone is the application 
+of computer vision algorithms for interpreting medical imaging, such as CT scans and MRIs. By leveraging AI to 
+diagnose and categorize diseases from these images, healthcare providers can make more precise and expedited 
+ diagnoses3. The strides made in machine learning are also noteworthy, with AI algorithms being trained on vast 
+repositories of data to identify patterns and make predictions. This capability can be harnessed to analyze a wealth 
+of patient data, including vital signs and test results, to anticipate health complications and tailor personalized 
+care  plans4. Furthermore, the rise of AI-driven virtual assistants in telemedicine is redefining patient-provider 
+interactions, offering patients convenient access to healthcare information and resources, along with the ability 
+to communicate with healthcare professionals in a manner that is both efficient and personalized.
+As AI revolutionizes healthcare interactions, ushering in an era of more individualized, streamlined, and 
+accessible care, it becomes imperative to ensure that the development and deployment of AI systems prioritize 
+patient safety and privacy. This review article endeavors to present a comprehensive overview of the current state 
+OPEN
+1Department of Ophthalmology, The Second Norman Bethune Hospital of Jilin University, Changchun 130000, 
+China. 2International School, Beijing University of Posts and Telecommunications, Bei Jing 100876, China. *email: 
+liguangyu@aliyun.com
+
+2
+Vol:.(1234567890)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+of AI technology within patient monitoring and telemedicine sectors, scrutinizing the potential benefits as well 
+as the challenges these innovations face. Additionally, we aim to proffer guidance for researchers, clinicians, and 
+policymakers to foster the judicious and effective use of AI technology in healthcare.
+Applications of artificial intelligence in healthcare
+Virtual assistant chatbots for patient support and education
+Virtual assistant chatbots can provide personalized medical support and education to patients based on their 
+individual needs and preferences. By utilizing Natural Language Processing (NLP) and machine learning algo-
+rithms, chatbots can learn from patient interactions and adjust their responses to match the patient’s language 
+and style, making the user experience more natural and  engaging5,6. Moreover, virtual assistant chatbots can 
+offer round-the-clock service, which is particularly valuable for patients who are unable to access healthcare 
+providers during regular working hours. With 24/7 availability, chatbots can help patients obtain the informa -
+tion and support they need when they need it. Additionally, virtual assistant chatbots can provide personalized 
+health information and advice based on a patient’s personal medical history and risk  factors7. They can analyze 
+a patient’s medical records and generate tailored prevention and treatment recommendations, ensuring that 
+patients receive the most appropriate care. Virtual assistant chatbots can provide personalized reminders and 
+medical education, helping patients understand and comply with treatment plans. However, further research 
+is needed to evaluate its effectiveness in improving patient compliance and motivation. For instance, a chatbot 
+might recommend healthy meal plans or exercise routines to diabetic patients based on their dietary preferences 
+and physical activity habits. There are already several online chatbots, such as Your.MD, Your Symptoms, Baby-
+lon Health, AI Health, Iodine, Molly, and others, that use artificial intelligence and machine learning to provide 
+personalized health information and support for minor illnesses, chronic diseases, and mental health issues.
+However, the application of virtual assistant chatbots still faces certain limitations. In the United States, 
+patients’ medical histories are often scattered across different systems, making it very complex to access and 
+integrate these  records8. Currently, AI faces major challenges in handling these tasks, including issues with data 
+interoperability, standardization, and integration. Firstly, data interoperability is a major issue. Patients’ medical 
+records may be stored in different electronic health record (EHR) systems, which lack unified standards and 
+protocols, making it difficult to share and integrate  data9. To address this problem, health information exchanges 
+(HIEs) and data standardization protocols (such as HL7 FHIR) are continuously evolving, aiming to improve 
+the seamless exchange of medical information between different  systems10. Secondly, data standardization is 
+also a challenge. Different healthcare institutions and EHR systems may use different data formats and coding 
+systems, making data integration more complex. For example, the same medical condition might be described 
+using different terms and codes in different systems, posing difficulties for AI in processing and analyzing this 
+data. Overcoming these obstacles requires the promotion of unified data standards and coding systems across the 
+ industry11. Additionally, data integration itself faces technical and policy barriers. Many healthcare institutions 
+lack sufficient technical support for data management and sharing, or they may be unwilling to share patient data 
+due to privacy and security concerns. These factors further limit the application of AI technology in integrating 
+and analyzing dispersed patient  data12.
+Despite these challenges, virtual assistant chatbots hold great potential in personalized healthcare. By con -
+tinuously improving data interoperability, standardization, and integration technologies, and addressing policy 
+and technical barriers, AI tools can better serve patients, providing more accurate and personalized health 
+recommendations.
+Real‑time patient monitoring and telepatient monitoring using wearable devices and sensors
+Real-time patient monitoring and remote patient care can be achieved through the use of wearable devices and 
+sensors, which enable healthcare providers to continuously track vital signs and other biometric  data13. For 
+instance, smartwatches can monitor a patient’s heart rate and blood pressure, wirelessly transmitting this data 
+to a central monitoring station for analysis and interpretation by healthcare professionals. Wearable sensors, 
+another compact and portable option, can be worn on the body or integrated into clothing, jewelry, or other 
+accessories to monitor vital signs and health metrics such as heart rate, blood pressure, respiratory rate, blood 
+oxygen saturation, body temperature, and physical activity, transmitting the data wirelessly to a central monitor-
+ing station for in-depth analysis. Moreover, smartphone applications can utilize built-in sensors and wearable 
+devices to monitor patients’ health in real-time, tracking information such as physical activity, sleep patterns, 
+and dietary habits, while providing feedback and suggestions to help manage their health. Additionally, smart 
+home devices like smart speakers and thermostats can also be used to monitor patients’ health status in real-
+time. The use of wearable devices and sensors for real-time patient monitoring offers many potential benefits for 
+both patients and healthcare providers. Patients may experience increased security and peace of mind, knowing 
+that their health status is being monitored and that any changes in their condition can be quickly detected. For 
+healthcare providers, it can help better understand patients’ health needs and monitor the progression of their 
+conditions, leading to more personalized and targeted  care14. Furthermore, real-time patient monitoring with 
+wearable devices and sensors can automate some monitoring tasks, thereby reducing the burden on healthcare 
+providers and decreasing the risk of human error.
+However, there are also potential challenges associated with using wearable devices and sensors for real-
+time patient monitoring. Firstly, the process of real-time monitoring can generate a vast amount of data, some 
+of which may be difficult to analyze and interpret, especially when dealing with data from multiple sources in 
+different formats. Moreover, these wearable devices have made significant advancements in data collection and 
+self-monitoring, but their accuracy still has limitations. In particular, wrist-worn devices can be affected by wrist 
+position and user activity when measuring blood pressure, leading to inaccurate  data15. In contrast, upper-arm 
+
+3
+Vol.:(0123456789)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+cuffs are generally considered more reliable for blood pressure measurement. Therefore, when using AI tools 
+that rely on such data, it is crucial to fully understand the limitations of these devices and take necessary pre-
+cautions in practical applications to ensure the effectiveness and reliability of AI tools, avoiding potential risks 
+caused by inaccurate data.
+Some data may even be unreliable or inaccurate, posing a risk of misjudgment. In healthcare, unreliable or 
+inaccurate data can have a significant impact on diagnostic and treatment decisions. For example, research has 
+shown that the accuracy of wearable devices in measuring physiological parameters such as heart rate and blood 
+pressure may be affected by the wearing method, user activity, and technical limitations of the device  itself16,17. 
+In addition, integration issues between different data sources may also lead to inconsistent or incomplete data, 
+thereby affecting the performance and reliability of AI models. To address these issues, strict data validation and 
+quality control measures must be implemented to ensure that the data used for AI model training and application 
+has high quality and  reliability18. Therefore, healthcare providers and policy makers must consider the limita-
+tions of these devices, take necessary preventive measures in clinical applications, avoid potential risks caused 
+by inaccurate data, help researchers, clinicians, and policy makers better understand and apply AI technology, 
+and ensure that patients can benefit from it.
+Additionally, there are potential risks to patient privacy and data security. Sensitive information about 
+patients’ health and well-being could be misused by unauthorized third parties if not adequately protected. To 
+address these challenges, researchers are developing AI-driven systems to analyze large amounts of data from 
+various sources, providing actionable insights for clinicians. Moreover, anonymization and encryption technolo-
+gies are being employed to further protect patient privacy and data security.
+Predictive models for disease progression and patient risk stratification
+Predictive models for disease progression and patient risk stratification utilize machine learning algorithms to 
+analyze patients’ medical history, genetic information, and other data to predict their risk of developing certain 
+diseases or the progression of existing conditions. These models can also identify patients at risk of developing 
+certain diseases, enabling healthcare providers to implement preventative measures to reduce  risk19. They are also 
+used to forecast the progression of patients’ current diseases, allowing healthcare providers to adjust treatment 
+plans accordingly. Predictive models are trained on large patient datasets using machine learning algorithms, 
+including information about medical history, genetic data, and other relevant information, analyzing the data to 
+identify patterns and relationships that can be used to predict the risk of patients developing certain  diseases20. 
+Predictive models for disease progression and patient risk stratification have the capability to identify patients 
+at risk of developing certain diseases and to predict the progression of current diseases, which allows healthcare 
+providers to take preventative actions to reduce the risk of certain diseases and to adjust their treatment plans 
+to better manage patients’ current  conditions21. Numerous models have been applied to the prediction and risk 
+assessment of various diseases. For example, researchers have developed deep learning models that can predict 
+the progression of Alzheimer’s disease based on brain MRI scans and other patient information, helping doc-
+tors to better understand the progression of the disease and adjust treatment plans accordingly. Cardiovascular 
+disease risk prediction models can use patient data such as blood pressure, cholesterol levels, and genetic infor-
+mation to forecast the risk of heart disease, aiding doctors in identifying high-risk patients and providing early 
+intervention  measures22. Cancer risk prediction models can predict cancer risk based on patient data (such as 
+family history, lifestyle factors, and genetic information), helping doctors identify high-risk patients and offer 
+early interventions to reduce their cancer  risk23. Risk prediction models for surgical complications can predict 
+the risk of postoperative complications based on patient data (such as age, medical history, and type of surgery), 
+helping doctors identify high-risk patients and provide additional monitoring or interventions to reduce the risk 
+of  complications24. Readmission risk prediction models can forecast the risk of readmission based on patient 
+data (such as age, medical history, and severity of illness), helping doctors identify high-risk patients and pro -
+vide additional monitoring or interventions to reduce their risk of readmission. These are just a few examples 
+of how deep learning is used to predict disease progression and patient risk  stratification25. As deep learning 
+models become increasingly widespread in healthcare, we can expect to see more such predictive models used 
+to improve patient care and outcomes.
+Predictive models for disease progression and patient risk stratification serve as indispensable tools within the 
+medical domain, affording healthcare practitioners the capability to proactively identify individuals at elevated 
+risk of specific pathologies and implement preemptive  interventions26. Despite their utility, the deployment of 
+such models is fraught with challenges pertaining to the veracity and integrity of the data underpinning model 
+training, as well as potential systemic biases or inaccuracies inherent to the predictive analytics. To uphold the 
+precision and fidelity of these models, it is imperative to meticulously curate high-caliber, pristine datasets for 
+model training purposes and to persistently appraise model efficacy to discern any latent errors or biases that 
+could compromise predictive outcomes. Additionally, the conscientious application of these models is paramount, 
+ensuring that patients are not subjected to inequitable treatment predicated on model-derived predictions. As 
+the adoption of these models expands within clinical practice, ongoing scrutiny of their performance metrics 
+and a rigorous evaluation of their therapeutic impact become vital components to guarantee their judicious 
+and efficacious deployment. Moreover, the datasets harnessed for model training must be faithfully representa-
+tive of the demographic being studied, encompassing an array of pertinent patient information—demography, 
+genetic lineage, and environmental exposures included—to foster the development of models that accurately 
+forecast disease progression and risk stratification across the entire patient spectrum, irrespective of individual 
+backgrounds or  characteristics27. It is equally expedient to ensure that the utilization of such models adheres to 
+the highest ethical standards, secured through informed patient consent, and buttressed by stringent oversight 
+
+4
+Vol:.(1234567890)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+and regulatory frameworks designed to forestall any potential misapplication or discriminatory practices against 
+targeted patient  populations28.
+Personalized treatment recommendations based on patient data
+Personalized treatment recommendations based on patient data represent a highly meaningful domain within 
+healthcare, as they can improve patient outcomes and reduce medical costs. Deep learning models are capable of 
+analyzing vast amounts of patient data, including genomic, genetic, demographic, and lifestyle factors, to deter-
+mine how patients respond to different treatments. Genomic data, such as whole-genome sequencing, single-
+nucleotide polymorphisms (SNPs), and gene expression profiles, provide critical insights into the molecular 
+underpinnings of diseases and individual responses to  therapies29. Subsequently, this information can be used 
+to develop personalized treatment recommendations tailored to the unique characteristics and medical history 
+of an individual  patient30. For instance, researchers have developed deep learning models capable of analyzing 
+the genomic and genetic features of a patient’s tumor and predicting their response to various chemotherapy 
+ drugs31. By incorporating data on gene mutations, copy number variations, and epigenetic modifications, these 
+models can identify specific biomarkers that correlate with treatment efficacy. This information can then be 
+used to recommend the most effective treatment approach for that patient, thereby increasing their chances of 
+a successful  outcome32. Similarly, deep learning models can analyze patient data such as age, medical history, 
+and type of surgery, alongside genomic data, to predict the risk of complications like infections or bleeding. 
+This allows for the recommendation of additional monitoring or preventative measures for high-risk patients, 
+reducing their risk of complications and improving their overall outcomes. Moreover, pharmacogenomic data 
+can be utilized to predict adverse drug reactions and optimize drug dosing, further personalizing patient  care33.
+Pharmacogenomics is a rapidly evolving field that integrates genetic information to optimize drug therapy, 
+analyzing how genetic variations affect drug efficacy and potential side effects, significantly enhancing the preci-
+sion of personalized  medicine34. Deep learning models can utilize pharmacogenomic data to predict a patient’s 
+metabolism and response to specific drugs. For instance, genetic variations in genes encoding drug-metabolizing 
+enzymes, transport proteins, and drug targets influence drug concentration in the body and subsequent thera -
+peutic  outcomes35. By integrating pharmacogenomic data, AI models can recommend the most suitable drugs 
+and dosages for each patient, minimizing side effects and maximizing therapeutic benefits.
+Additionally, pharmacogenomic data can help identify patients who might experience adverse drug reactions, 
+allowing for preventive measures or alternative treatment strategies. This data-driven approach ensures that 
+patients receive safe and effective treatments based on their unique genetic makeup. For example, in oncology, 
+pharmacogenomic profiling can guide the selection of targeted therapies that are more effective for patients 
+with specific genetic  mutations36. By incorporating pharmacogenomic data into personalized treatment plans, 
+healthcare providers can achieve better clinical outcomes and improve overall patient care.
+Automatic appointment scheduling and reminders
+Automatic appointment scheduling and reminders are invaluable tools in the healthcare sector, capable of 
+improving patient compliance and lessening the workload of healthcare  providers37. As the capability of deep 
+learning models to analyze vast amounts of patient data continues to advance, we can look forward to an increas-
+ing number of examples where automatic appointment scheduling and reminders are employed in healthcare.
+Automated appointment scheduling and reminders are crucial tools in healthcare as they can enhance patient 
+adherence to treatment plans and reduce the burden on healthcare providers. Artificial intelligence (AI), espe -
+cially deep learning models, can significantly improve these processes by analyzing large amounts of patient 
+data to make more accurate and personalized recommendations. Deep learning models can analyze patient 
+data, including their medical history, previous appointment schedules, and preferences, to recommend the best 
+appointment times for individual patients. This advanced analysis reduces the likelihood of missed appoint-
+ments or the need for rescheduling, leading to better outcomes and increased efficiency in the healthcare system. 
+For example, AI can identify patterns in patient behavior and appointment history that may not be evident in 
+traditional scheduling systems, optimizing the scheduling process to better meet patient needs and provider 
+availability.
+Additionally, automated appointment reminders are a key aspect of AI-enhanced scheduling. By analyzing 
+patient data such as demographics, medical history, and past responses to appointment reminders, deep learn-
+ing models can determine the most effective reminder strategy for each  patient38. This personalized approach 
+reduces the number of missed appointments and ensures patients receive the care they need when they need it. 
+AI can also adjust reminder strategies in real-time based on patient responses, further enhancing the effective-
+ness of these reminders.
+Real-world examples of AI-enhanced automated appointment scheduling and reminders include platforms 
+like PatientPop, Zocdoc, and Vyasa. These platforms utilize AI to analyze patient data and recommend the best 
+appointment times based on patient history and previous appointment schedules. They also send automated, 
+personalized appointment reminders to patients, increasing the likelihood of appointments and necessary care. 
+These AI-driven platforms provide seamless automated scheduling, allowing patients to easily book online and 
+receive reminders via text or email, thereby improving overall patient compliance and reducing the workload 
+on healthcare providers.
+Research has shown that automated appointment scheduling and reminder systems can indeed improve 
+patient compliance in certain situations. For example, research has found that using text message reminders can 
+significantly reduce the occurrence of delayed medical visits, thereby improving patient  compliance39. Another 
+study suggests that email reminders have also played a positive role in increasing vaccination rates and follow-
+up  appointments40.
+
+5
+Vol.:(0123456789)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+However, relying solely on reminder systems cannot fully address compliance and motivation issues. The 
+compliance of patients with treatment plans is also influenced by various factors, including trust in doctors, 
+relationship with the medical system, and the effectiveness of treatment models.
+As AI and deep learning models continue to advance, we can expect to see more examples of AI-driven auto-
+mated scheduling and reminders being used in healthcare, leading to improved patient outcomes and increased 
+efficiency in healthcare delivery.
+The transformative impact of AI on healthcare
+Artificial intelligence (AI) is revolutionizing various aspects of healthcare, with several key areas being the focus 
+of current research and development. In medical imaging and diagnosis, deep learning models are currently used 
+to assist in the detection and diagnosis of diseases in medical images such as X-rays, MRIs, and CT scans. For 
+example, AI systems are employed to identify early signs of cancer, cardiovascular diseases, and neurological dis-
+orders with remarkable accuracy and speed. In personalized medicine, AI aids in analyzing genetic, demographic, 
+and lifestyle data to provide personalized treatment recommendations. This approach is particularly beneficial 
+in oncology, where AI can predict a patient’s response to different chemotherapy drugs, thus formulating more 
+effective and individualized treatment plans. Predictive analytics and risk assessment is another crucial area of 
+AI research, where AI models are used to predict patient outcomes, such as the likelihood of disease progression, 
+readmission rates, and potential risks of surgical complications. These predictions enable healthcare providers 
+to take preventive measures, enhance the quality of patient care, and reduce healthcare costs. Natural language 
+processing (NLP) technology is used to extract meaningful information from unstructured medical data, such 
+as clinical records and research articles. This technology helps improve electronic health record (EHR) systems, 
+streamline administrative tasks, and enhance patient care through better data utilization.
+Challenges and concerns
+Data security and privacy issues
+The application of artificial intelligence in healthcare generates and stores vast amounts of sensitive personal 
+and medical information, making data security and privacy a paramount  concern41. Various data security risks 
+exist, such as data breaches where hackers or malicious actors gain unauthorized access to patient data (like 
+medical records or insurance information), potentially causing significant financial and reputational damage to 
+healthcare providers. Inadequate data encryption, whether at rest or in transit, can leave patient data vulnerable 
+to unauthorized access or misuse. Lack of access control, failing to manage user access to patient data properly, 
+can also lead to unauthorized access or misuse. Without proper data retention strategies, the storage period of 
+patient data may extend beyond what is necessary, increasing the risk of unauthorized access or misuse. Fur -
+thermore, the absence of data breach prevention and response plans can leave healthcare providers unprepared 
+in the event of a data breach.
+Thus, it is essential for healthcare providers to ensure their systems and processes are secure and that patient 
+data is protected from unauthorized access or misuse. A combination of technical and organizational measures 
+can be employed to tackle these issues, including data encryption, access control, and data breach prevention 
+and response  planning42. Beyond technical measures, healthcare providers must comply with legal requirements 
+such as the Health Insurance Portability and Accountability Act (HIPAA) in the United States, which regulates 
+the use and disclosure of patient data. Adherence to such regulations is crucial for ensuring the protection of 
+patient data. Data security and privacy concerns are a critical issue within the healthcare sector, and healthcare 
+providers must take steps to ensure that data used for training and deploying deep learning models is secure 
+and patient privacy is  safeguarded43.
+Bias and discrimination in AI algorithms
+The potential for bias and discrimination arises in artificial intelligence algorithms when the data used to train 
+them reflects the biases of the data collectors or inherent biases within the data itself. This can lead to decisions 
+made by the algorithms that result in unfair outcomes for certain individuals or  groups44. When the propor -
+tion of a certain class of patient data is low in the training dataset, AI algorithms may exhibit lower accuracy in 
+diagnosing and treating these patient groups. A study found that a skin cancer diagnostic algorithm performed 
+excellently on patients with light skin but showed significantly lower accuracy for those with dark  skin45. Addi-
+tionally, research has shown that gender balance in medical imaging datasets is crucial for training AI systems 
+for computer-aided diagnosis. Failing to achieve this balance leads to a persistent decline in diagnostic perfor -
+mance for underrepresented  genders46. Therefore, when developing and deploying AI algorithms, it is essential 
+to identify and mitigate these biases. This can be achieved by using diverse and representative datasets for train-
+ing, regularly monitoring algorithm performance across different groups, and employing fairness correction 
+techniques to adjust the algorithms and reduce biases.
+To address issues of bias and discrimination in AI algorithms, healthcare providers must be aware of potential 
+sources of bias in the data they collect and the algorithms they use. This may involve analyzing potential biases 
+within the data, using diverse datasets for algorithm training, and implementing measures to monitor and address 
+any biases or discrimination that may occur within the algorithms. It is equally important to recognize that 
+biases and discrimination in AI algorithms can have serious consequences, as they can lead to unfair outcomes 
+for patients and potentially erode trust in the healthcare system.
+The adoption of artificial intelligence (AI) in the healthcare sector faces significant obstacles due to the 
+conservatism of existing medical systems. Resistance to change is a major issue, as healthcare systems tend to 
+favor established practices over new technologies. This resistance can slow down the adoption of AI, with physi-
+cians and administrators potentially skeptical of its benefits and concerned about disrupting current workflows. 
+
+6
+Vol:.(1234567890)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+Integration with existing systems is another challenge; AI solutions must be compatible with current health 
+information systems (HIS) and electronic health records (EHR). Technical incompatibilities and the need for 
+substantial infrastructure changes can be major barriers to seamless integration.
+Training and expertise are also critical factors. The successful implementation of AI in healthcare requires 
+that medical professionals receive adequate training and have a thorough understanding of these technologies. 
+A lack of sufficient education and expertise can hinder the effective adoption and use of AI tools. By clearly 
+understanding these systemic barriers, we can develop targeted strategies to address these issues and promote 
+the successful integration of AI into medical practice.
+Regulatory frameworks and approval processes
+Regulatory frameworks and approval processes ensure that new technologies are reviewed and approved by 
+regulatory agencies before being used in patient care, helping to protect patient safety and promote the use 
+of effective technologies in the healthcare  industry47. The reliability and effectiveness of wearable devices, in 
+particular, need special attention, as the data from these devices directly impact the decision-making quality 
+of AI tools. For example, wrist-worn devices may significantly differ from traditional upper-arm cuff devices 
+in measuring blood  pressure48, potentially leading AI tools to make incorrect judgments based on inaccurate 
+data, affecting patient health management. Therefore, evaluating and validating the reliability and effectiveness 
+of wearable devices is crucial. In the United States, the Food and Drug Administration (FDA) regulates medical 
+devices, including AI-driven medical applications and wearable devices, requiring all medical devices to undergo 
+a rigorous approval process before being marketed to ensure their safety and  effectiveness49.
+In other countries, such as the United Kingdom, the regulatory frameworks and approval procedures for 
+medical devices may differ, with the Medicines and Healthcare products Regulatory Agency (MHRA) responsible 
+for regulating medical devices in the UK, having its own requirements and approval  procedures50. The regulatory 
+framework for AI-based diagnostic and decision support tools is rapidly evolving, as these technologies become 
+increasingly integral to healthcare. The FDA, for instance, has developed a regulatory approach specifically 
+tailored to Software as a Medical Device (SaMD), which includes AI-based  tools51. The FDA ’s Digital Health 
+Innovation Action Plan and the proposed regulatory framework for modifications to AI/ML-based SaMD are 
+key initiatives aimed at ensuring the safety and effectiveness of AI tools. These frameworks outline premarket 
+review pathways, postmarket surveillance, and the importance of transparency in AI algorithm modifications.
+Similarly, international bodies such as the European Medicines Agency (EMA) and Japan’s Pharmaceuticals and 
+Medical Devices Agency (PMDA) have established guidelines for the evaluation and approval of AI-based medi-
+cal  technologies52,53. The European Union’s General Data Protection Regulation (GDPR) also plays a significant 
+role in governing the use of AI in healthcare by setting stringent requirements for data protection and  privacy54.
+In addition to regulatory bodies, organizations like the International Medical Device Regulators Forum 
+(IMDRF) have provided global harmonization efforts through documents such as the "Software as a Medical 
+Device (SaMD): Key Definitions" and "SaMD: Clinical Evaluation" guidelines. These initiatives help create a 
+consistent framework for the development, evaluation, and regulation of AI-based medical devices  globally55.
+By incorporating these regulatory frameworks and guidelines into the development and deployment of AI-
+based diagnostic and decision support tools, developers and healthcare providers can ensure compliance with 
+safety and efficacy standards, ultimately enhancing patient care and trust in AI technologies.
+Patient acceptance and adoption of AI‑driven technologies
+Patient acceptance and willingness to adopt AI technologies are crucial factors for the success and sustainability 
+of these technologies in healthcare. Patients may have varying attitudes towards AI technologies in healthcare. 
+For instance, some patients might be satisfied with AI-driven technologies, while others may have concerns about 
+their accuracy and reliability. Patients’ understanding of the technology, trust in it, and their perceptions of the 
+risks and benefits associated with the technology can influence their attitudes towards accepting AI.
+Here are some real-world examples where patients have accepted and adopted AI technologies in healthcare: 
+The Mayo Clinic is utilizing an AI chatbot named Mayo Clinic AI to provide patients with personalized informa-
+tion about their health conditions and answer questions related to their health. The National Health Service (NHS) 
+in the UK is using Florence, an AI virtual nursing assistant, to support patients with chronic health conditions. 
+AI-driven robotic surgery is another example of patient acceptance and adoption of AI technology in healthcare. 
+Robotic surgery involves the use of surgical robots to assist surgeons during operations, with some robots using 
+AI to increase precision and accuracy in the surgical  process56.
+Patients’ acceptance of AI technology significantly impacts the success and sustainability of these innovations. 
+For those reluctant to adopt AI, several strategies can help increase their acceptance. Educating and training 
+patients about AI technology, including its functions, benefits, and potential risks, can help them understand 
+how these technologies can improve their health management. Maintaining transparency and communication 
+is crucial; explaining how AI technology uses their data and what measures are taken to protect their privacy 
+and data security can alleviate concerns. Offering personalized experiences tailored to patients’ specific needs 
+and preferences can make them feel that these technologies are customized for them. Building trust is essential, 
+and this can be achieved by showcasing successful case studies and validation data of AI technologies in clinical 
+applications. Additionally, involving patients in the decision-making process helps them feel a sense of agency 
+and control in their healthcare  journey57. Lastly, respecting the choices of patients who are unwilling to adopt 
+AI technology is important, and providing alternative options ensures they continue to receive high-quality 
+medical services.
+To improve patient acceptance and adoption rates of AI technologies in healthcare, it is essential to provide 
+clear and transparent information to patients about the technology and its uses, as well as to address any concerns 
+
+7
+Vol.:(0123456789)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+or questions they may have about the technology. Patient willingness to accept and adopt AI technologies is a 
+significant factor affecting the technology’s success and sustainability, so patient attitudes, understanding, and 
+trust in the technology should be specially considered when implementing AI technologies in healthcare.
+Recommendations for future research
+The advent of artificial intelligence in the realm of healthcare portends a transformative era, with the potential to 
+radically enhance patient care and optimize therapeutic outcomes. Nevertheless, the integration of AI into clinical 
+practice necessitates a scrupulous examination of its ethical, legal, and societal  ramifications58. As such, a seminal 
+direction for subsequent research initiatives is to cultivate robust collaborative frameworks between investigative 
+researchers and clinical practitioners. It is essential that the research fraternity engages in synergistic partnerships 
+with frontline clinicians to ensure that the AI technologies they conceive and develop are not only innovative 
+but also directly applicable and relevant to the exigencies of clinical practice. Furthermore, policymakers must 
+be at the vanguard of establishing comprehensive policies and regulatory scaffolding to oversee the responsible 
+and ethical deployment of AI technologies within the healthcare sector. The formulation of stringent policies is 
+critical to harnessing AI technologies in a manner that engenders transparency, accountability, and, above all, 
+prioritizes the sanctity and protection of patients’ data privacy and  security59. Only through meticulous govern-
+ance can we ensure that the benefits of artificial intelligence in healthcare are realized without compromising 
+the trust and well-being of those who seek our care.
+Data availability
+Data generated during the current study are available from the corresponding author upon reasonable request.
+Received: 26 April 2024; Accepted: 12 August 2024
+References
+ 1. Esteva, A., Kuprel, B. & Novoa, R. A. Dermatologist-level classification of skin cancer with deep neural networks. Oncologie  
+19(11–12), 407–408 (2017).
+ 2. Wiriyathammabhum, P . et al. Computer vision and natural language processing: Recent approaches in multimedia and robotics. 
+ACM Comput. Surveys 49(4), 1–44 (2017).
+ 3. Gulshan, V . et al. Development and validation of a deep learning algorithm for detection of diabetic retinopathy in retinal fundus 
+photographs. Jama-J. Am. Med. Assoc. 316(22), 2402–2410 (2016).
+ 4. Susymary, J. & Deepalakshmi, P . Machine learning for precision medicine forecasts and challenges when incorporating non omics 
+and omics data. Intell. Decis. Technol.-Netherlands 15(1), 69–85 (2021).
+ 5. Aggarwal, A. et al. Artificial intelligence-based chatbots for promoting health behavioral changes: Systematic review. J. Med. 
+Internet Res. 25, e40789 (2023).
+ 6. Kurniawan, M. H. et al. A systematic review of artificial intelligence-powered (AI-powered) chatbot intervention for managing 
+chronic illness. Ann. Med. https:// doi. org/ 10. 1080/ 07853 890. 2024. 23029 80 (2024).
+ 7. Abd Rahman, R. et al. Application of machine learning methods in mental health detection: A systematic review. IEEE Access 8, 
+183952–183964 (2020).
+ 8. Calvaresi, D. et al. Exploring agent-based chatbots: A systematic literature review. J. Ambient Intell. Hum. Comput. 14(8), 11207–
+11226 (2023).
+ 9. Bertagnolli, M. M. et al. The electronic health record as a clinical trials tool: Opportunities and challenges. Clin. Trials 17(3), 
+237–242 (2020).
+ 10. Kiourtis, A., et al. Improving Health Information Exchange through Wireless Communication Protocols. In: 16th International Con-
+ference on Wireless and Mobile Computing, Networking and Communications (IEEE WiMob). Electr Network. (2020).
+ 11. Nickel, B. et al. Words do matter: A systematic review on how different terminology for the same condition influences management 
+preferences. BMJ Open 7(7), e014129 (2017).
+ 12. van Panhuis, W . G. et al. A systematic review of barriers to data sharing in public health. BMC Public Health  https:// doi. org/ 10. 
+1186/ 1471- 2458- 14- 1144 (2014).
+ 13. He, T. & Lee, C. Evolving flexible sensors, wearable and implantable technologies towards BodyNET for advanced healthcare and 
+reinforced life quality. IEEE Open J. Circuits Syst. 2, 702–720 (2021).
+ 14. Nguyen, T. N. et al. Guest editorial innovations in wearable, implantable, mobile, & remote healthcare with IoT & sensor informat-
+ics and patient monitoring. IEEE J. Biomed. Health Inform. 27(5), 2152–2154 (2023).
+ 15. Hrabovska, N., Kajati, E. & Zolotova, I. A validation study to confirm the accuracy of wearable devices based on health data analysis. 
+Electronics 12(11), 2536 (2023).
+ 16. Wang, T.-L. et al. Assessment of heart rate monitoring during exercise with smart wristbands and a heart rhythm patch: Validation 
+and comparison study. Jmir Form. Res. 7, e52519 (2023).
+ 17. Mukkamala, R. et al. Evaluation of the accuracy of cuffless blood pressure measurement devices: Challenges and proposals. 
+Hypertension 78(5), 1161–1167 (2021).
+ 18. Zamani, E. D. et al. Artificial intelligence and big data analytics for supply chain resilience: A systematic literature review. Ann. 
+Oper. Res. 327(2), 605–632 (2023).
+ 19. Cai, Y . et al. Artificial intelligence in the risk prediction models of cardiovascular disease and development of an independent 
+validation screening tool: A systematic review. BMC Med. https:// doi. org/ 10. 1186/ s12916- 024- 03273-7 (2024).
+ 20. Lopez-Cortes, X. A. et al. Machine-learning applications in oral cancer: A systematic review. Appl. Sci.-Basel 12(11), 5715 (2022).
+ 21. Mohsin, S. N. et al. The role of artificial intelligence in prediction, risk stratification, and personalized treatment planning for 
+congenital heart diseases. Cureus J. Med. Sci. https:// doi. org/ 10. 7759/ cureus. 44374 (2023).
+ 22. D’ Agostino, R. B. et al. General cardiovascular risk profile for use in primary care: The Framingham heart study. Circulation 118(4), 
+E86–E86 (2008).
+ 23. Zheng, Y . et al. Risk prediction models for breast cancer: a systematic review. BMJ Open 12(7), e055398 (2022).
+ 24. Zeng, S. et al. Machine learning approaches for the prediction of postoperative complication risk in liver resection patients. BMC 
+Med. Inform. Decis. Mak. https:// doi. org/ 10. 1186/ s12911- 021- 01731-3 (2021).
+ 25. Monteiro Costa, M. L. et al. Development and validation of predictive model for long-term hospitalization, readmission, and in-
+hospital death of patients over 60 years old. Einstein-Sao Paulo https:// doi. org/ 10. 31744/ einst ein_ journ al/ 2022A O8012 (2022).
+ 26. Y arborough, B. J. H. et al. Clinical implementation of suicide risk prediction models in healthcare: A qualitative study. BMC 
+Psychiatry https:// doi. org/ 10. 1186/ s12888- 022- 04400-5 (2022).
+
+8
+Vol:.(1234567890)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+ 27. Wiberg, H. M., Data-Driven Healthcare via Constraint Learning and Analytics. (2022).
+ 28. Obermeyer, Z. & Emanuel, E. J. Predicting the future—Big data, machine learning, and clinical medicine. N. Engl. J. Med. 375(13), 
+1216–1219 (2016).
+ 29. Liu, Z. et al. Effect of SNPs in protein kinase <i>Cz</i> gene on gene expression in the reporter gene detection system. World J. 
+Gastroenterol. 10(16), 2357–2360 (2004).
+ 30. Beam, A. L. & Kohane, I. S. Big data and machine learning in health care. Jama-J. Am. Med. Assoc. 319(13), 1317–1318 (2018).
+ 31. Wang, C.-W ., Khalil, M.-A. & Firdi, N. P . A survey on deep learning for precision oncology. Diagnostics 12(6), 1489 (2022).
+ 32. Cuocolo, R. et al. Machine learning in oncology: A clinical appraisal. Cancer Lett. 481, 55–62 (2020).
+ 33. McKillip, R. P . et al. Patient perceptions of care as influenced by a large institutional pharmacogenomic implementation program. 
+Clin. Pharmacol. Ther. 102(1), 106–114 (2017).
+ 34. Ryan, D. K. et al. Artificial intelligence and machine learning for clinical pharmacology. Br. J. Clin. Pharmacol. 90(3), 629–639 
+(2024).
+ 35. Wang, Y . et al. DeepDRK: A deep learning framework for drug repurposing through kernel-based multi-omics integration. Brief. 
+Bioinform. https:// doi. org/ 10. 1093/ bib/ bbab0 48 (2021).
+ 36. Varnai, R. et al. Pharmacogenomic biomarkers in docetaxel treatment of prostate cancer: From discovery to implementation. 
+Genes 10(8), 599 (2019).
+ 37. Werner, K. et al. Behavioural economic interventions to reduce health care appointment non-attendance: a systematic review and 
+meta-analysis. BMC Health Serv. Res. https:// doi. org/ 10. 1186/ s12913- 023- 10059-9 (2023).
+ 38. Posadzki, P . et al. Automated telephone communication systems for preventive healthcare and management of long-term condi-
+tions. Cochrane Database Syst. Rev. https:// doi. org/ 10. 1002/ 14651 858. CD009 921. pub2 (2016).
+ 39. Bjornholt, K. et al. The effect of daily small text message reminders for medicine compliance amongst young people connected with 
+the outpatient department for child and adolescent psychiatry. A controlled and randomized investigation. Nordic J. Psychiatry  
+70(4), 285–289 (2016).
+ 40. Dombkowski, K. J. et al.  The impacts of email reminder/recall on adolescent influenza vaccination. Vaccine  35(23), 3089–3095 
+(2017).
+ 41. Price, W . N. & Cohen, I. G. Privacy in the age of medical big data. Nat. Med. 25(1), 37–43 (2019).
+ 42. Figueroa-Lorenzo, S., Anorga, J. & Arrizabalaga, S. A Role-based access control model in modbus SCADA systems. A centralized 
+model approach. Sensors 19(20), 4455 (2019).
+ 43. Boyce, B. HIPAA compliance from a private practice purview. J. Acad. Nutr. Dietetics 114(9), 1341 (2014).
+ 44. Selbst, A.D., et al. Fairness and Abstraction in Sociotechnical Systems. In: ACM Conference on Fairness, Accountability, and Transpar-
+ency (FAT). Atlanta, GA. (2019).
+ 45. Daneshjou, R. et al. Disparities in dermatology AI performance on a diverse, curated clinical image set. Sci. Adv.  https:// doi. org/ 
+10. 1126/ sciadv. abq61 47 (2022).
+ 46. Larrazabal, A. J. et al. Gender imbalance in medical imaging datasets produces biased classifiers for computer-aided diagnosis. 
+Proc. Natl. Acad. Sci. U. S. A. 117(23), 12592–12594 (2020).
+ 47. Weenink, J.-W . et al. Publication of inspection frameworks: A qualitative study exploring the impact on quality improvement and 
+regulation in three healthcare settings. BMJ Qual. Saf. 30(10), 804–811 (2021).
+ 48. Melville, S. et al. A comparison and calibration of a wrist-worn blood pressure monitor for patient management: Assessing the 
+reliability of innovative blood pressure devices. J. Med. Internet Res. 20(4), e111 (2018).
+ 49. Miller, D. D. Machine intelligence in cardiovascular medicine. Cardiol. Rev. 28(2), 53–64 (2020).
+ 50. Lievevrouw, E., Marelli, L. & Van Hoyweghen, I. The FDA ’s standard-making process for medical digital health technologies: Co-
+producing technological and organizational innovation. Biosocieties 17(3), 549–576 (2022).
+ 51. Brindza, L. J. FDA regulation of computerized cytology devices. Anal. Quant. Cytol. Histol. 13(1), 3–6 (1991).
+ 52. Wu, Y . et al. BERT-based natural language processing of drug labeling documents: A case study for classifying drug-induced liver 
+injury risk. Front. Artif. Intell. https:// doi. org/ 10. 3389/ frai. 2021. 729834 (2021).
+ 53. Okamoto, R., Kojima, R. & Nakatsui, M. Toward AI-supported evaluation for safety control measures against near-miss events in 
+pharmaceutical products. Saf. Sci. 168, 106314 (2023).
+ 54. Meszaros, J., Minari, J. & Huys, I. The future regulation of artificial intelligence systems in healthcare services and medical research 
+in the European Union. Front. Genet. https:// doi. org/ 10. 3389/ fgene. 2022. 927721 (2022).
+ 55. Moshi, M. R. et al. Evaluation of mobile health applications: Is regulatory policy up to the challenge?. Int. J. Technol. Assess. Health 
+Care 35(4), 351–360 (2019).
+ 56. Bruining, N. & de Jaegere, P . The Mayo Clinic: Digital health centre of excellence. Eur. Heart J. Digit. Health 3(1), 5–7 (2022).
+ 57. Haidet, P . et al. Shared decision making reimagined. Patient Educ. Counsel. 123, 108249 (2024).
+ 58. Char, D. S., Shah, N. H. & Magnus, D. Implementing machine learning in health care—Addressing ethical challenges. N. Engl. J. 
+Med. 378(11), 981–983 (2018).
+ 59. Topol, E. J. High-performance medicine: The convergence of human and artificial intelligence. Nat. Med. 25(1), 44–56 (2019).
+Acknowledgements
+This work was supported by the National Natural Science Foundation of China (No. 82171053, 81570864)
+Author contributions
+Y-H L: Conceptualization, Methodology, Writing.  Y-L L, M-Y W: Writing—review & editing. G-Y L: Concep-
+tualization, Writing—original draft, Writing—review & editing, Funding acquisition, Resources, Supervision.
+Competing interests 
+The authors declare no competing interests.
+Additional information
+Correspondence and requests for materials should be addressed to G.-Y .L.
+Reprints and permissions information is available at www.nature.com/reprints.
+Publisher’s note Springer Nature remains neutral with regard to jurisdictional claims in published maps and 
+institutional affiliations.
+
+9
+Vol.:(0123456789)Scientific Reports |        (2024) 14:18994  | https://doi.org/10.1038/s41598-024-70073-7
+www.nature.com/scientificreports/
+Open Access  This article is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 
+4.0 International License, which permits any non-commercial use, sharing, distribution and reproduction in 
+any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide 
+a link to the Creative Commons licence, and indicate if you modified the licensed material. Y ou do not have 
+permission under this licence to share adapted material derived from this article or parts of it. The images or 
+other third party material in this article are included in the article’s Creative Commons licence, unless indicated 
+otherwise in a credit line to the material. If material is not included in the article’s Creative Commons licence and 
+your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain 
+permission directly from the copyright holder. To view a copy of this licence, visit http:// creat iveco mmons. org/ 
+licen ses/ by- nc- nd/4. 0/.
+© The Author(s) 2024

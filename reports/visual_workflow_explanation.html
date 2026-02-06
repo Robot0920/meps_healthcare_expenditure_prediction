@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEPS Multi-Stage Modeling Workflow</title>
+<style>
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+    --green: #4ade80; --orange: #fb923c; --red: #f87171;
+    --purple: #c084fc; --pink: #f472b6; --teal: #2dd4bf;
+    --blue: #60a5fa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* Header */
+  .hero { text-align: center; padding: 60px 20px 40px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+  .hero h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+  /* Container */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+
+  /* Pipeline overview */
+  .pipeline { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 30px 0; flex-wrap: wrap; }
+  .pipe-node { padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+  .pipe-node:hover { transform: translateY(-2px); }
+  .pipe-node.active { border-color: white; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+  .pipe-arrow { color: var(--muted); font-size: 1.4rem; }
+  .pipe-s0 { background: #1e3a5f; color: var(--accent); }
+  .pipe-s1 { background: #1a3a2a; color: var(--green); }
+  .pipe-s15 { background: #3b1f4a; color: var(--purple); }
+  .pipe-s2 { background: #4a1f1f; color: var(--red); }
+
+  /* Stage card */
+  .stage { background: var(--surface); border-radius: 12px; margin: 24px 0; overflow: hidden; border: 1px solid var(--surface2); }
+  .stage-header { padding: 20px 28px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
+  .stage-header:hover { background: var(--surface2); }
+  .stage-header h2 { font-size: 1.25rem; display: flex; align-items: center; gap: 12px; }
+  .stage-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-s0 { background: #1e3a5f; color: var(--accent); }
+  .badge-s1 { background: #1a3a2a; color: var(--green); }
+  .badge-s15 { background: #3b1f4a; color: var(--purple); }
+  .badge-s2 { background: #4a1f1f; color: var(--red); }
+  .chevron { font-size: 1.2rem; color: var(--muted); transition: transform 0.3s; }
+  .stage.open .chevron { transform: rotate(180deg); }
+  .stage-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .stage.open .stage-body { max-height: 3000px; }
+  .stage-content { padding: 0 28px 28px; }
+
+  /* Notebook tag */
+  .notebook-tag { display: inline-block; background: var(--surface2); color: var(--muted); padding: 2px 10px; border-radius: 4px; font-size: 0.8rem; font-family: monospace; margin-bottom: 16px; }
+
+  /* IO boxes */
+  .io-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 12px; align-items: stretch; margin: 16px 0; }
+  .io-box { background: var(--bg); border-radius: 8px; padding: 16px; border: 1px solid var(--surface2); }
+  .io-box h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .io-box.input h4 { color: var(--accent); }
+  .io-box.output h4 { color: var(--green); }
+  .io-arrow { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1.6rem; }
+  .var-list { list-style: none; }
+  .var-list li { padding: 3px 0; font-size: 0.9rem; display: flex; align-items: baseline; gap: 6px; }
+  .var-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .var-list.input li::before { background: var(--accent); }
+  .var-list.output li::before { background: var(--green); }
+  .var-name { font-family: 'Fira Code', monospace; font-size: 0.82rem; background: rgba(56,189,248,0.1); padding: 1px 6px; border-radius: 3px; color: var(--accent); }
+  .var-desc { color: var(--muted); font-size: 0.82rem; }
+
+  /* Model card */
+  .model-card { background: var(--bg); border: 1px solid var(--surface2); border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .model-card h4 { color: var(--orange); font-size: 0.95rem; margin-bottom: 8px; }
+  .model-meta { display: flex; gap: 16px; flex-wrap: wrap; margin: 8px 0; }
+  .meta-chip { background: var(--surface2); padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; color: var(--muted); }
+
+  /* Sub-stage tabs */
+  .substage-tabs { display: flex; gap: 6px; margin: 16px 0 12px; flex-wrap: wrap; }
+  .substage-tab { padding: 6px 14px; border-radius: 6px; background: var(--surface2); color: var(--muted); cursor: pointer; font-size: 0.85rem; font-weight: 500; border: 1px solid transparent; transition: all 0.2s; }
+  .substage-tab:hover { color: var(--text); }
+  .substage-tab.active { background: #3b1f4a; color: var(--purple); border-color: var(--purple); }
+  .substage-content { display: none; }
+  .substage-content.active { display: block; }
+
+  /* Description text */
+  .desc { color: var(--muted); font-size: 0.92rem; margin: 8px 0; }
+  .desc strong { color: var(--text); }
+  .highlight { background: rgba(56,189,248,0.08); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 0.9rem; }
+
+  /* Formula */
+  .formula { background: #0c1222; border: 1px solid var(--surface2); border-radius: 6px; padding: 12px 16px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--teal); margin: 10px 0; overflow-x: auto; white-space: pre; }
+
+  /* Table */
+  .mini-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.85rem; }
+  .mini-table th { background: var(--surface2); padding: 8px 12px; text-align: left; color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .mini-table td { padding: 8px 12px; border-top: 1px solid var(--surface2); }
+  .mini-table tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* Robustness section */
+  .robustness { margin-top: 40px; }
+  .rob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .rob-card { background: var(--surface); border-radius: 10px; padding: 20px; border: 1px solid var(--surface2); }
+  .rob-card h4 { font-size: 0.95rem; margin-bottom: 6px; }
+  .rob-card p { color: var(--muted); font-size: 0.88rem; }
+  .rob-icon { font-size: 1.5rem; margin-bottom: 8px; }
+
+  /* Data flow diagram */
+  .flow-diagram { background: var(--surface); border-radius: 12px; padding: 28px; margin: 30px 0; border: 1px solid var(--surface2); overflow-x: auto; }
+  .flow-diagram h3 { margin-bottom: 16px; color: var(--accent); }
+  .flow-svg { width: 100%; max-width: 1000px; margin: 0 auto; display: block; }
+
+  @media (max-width: 768px) {
+    .io-row { grid-template-columns: 1fr; }
+    .io-arrow { transform: rotate(90deg); padding: 4px 0; }
+    .rob-grid { grid-template-columns: 1fr; }
+    .pipeline { gap: 4px; }
+    .pipe-node { padding: 6px 10px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>MEPS <span>Multi-Stage</span> Modeling Workflow</h1>
+  <p>Predicting Year 2 healthcare expenditure through stepwise supervised learning with clinically interpretable latent risk factors</p>
+</div>
+
+<div class="container">
+
+<!-- Pipeline nav -->
+<div class="pipeline">
+  <div class="pipe-node pipe-s0" onclick="scrollToStage('stage0')">Stage 0</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-node pipe-s1" onclick="scrollToStage('stage1')">Stage 1</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-node pipe-s15" onclick="scrollToStage('stage15')">Stage 1.5</div>
+  <div class="pipe-arrow">→</div>
+  <div class="pipe-node pipe-s2" onclick="scrollToStage('stage2')">Stage 2</div>
+</div>
+
+<!-- ==================== STAGE 0 ==================== -->
+<div class="stage open" id="stage0">
+  <div class="stage-header" onclick="toggleStage(this)">
+    <h2><span class="stage-badge badge-s0">Stage 0</span> Data Processing &amp; Feature Engineering</h2>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="stage-body">
+    <div class="stage-content">
+      <div class="notebook-tag">5.0_data_processing_v2_corrected.ipynb</div>
+      <p class="desc"><strong>Purpose:</strong> Transform raw MEPS survey files into a clean, model-ready feature matrix. All features are derived exclusively from Year 1 data to prevent temporal data leakage.</p>
+
+      <div class="io-row">
+        <div class="io-box input">
+          <h4>Input (Raw MEPS Files)</h4>
+          <ul class="var-list input">
+            <li><span class="var-name">Longitudinal</span> <span class="var-desc">h172, h183, h193, h202, h210, h217 — 2-year patient tracking</span></li>
+            <li><span class="var-name">Conditions</span> <span class="var-desc">h162, h170, h180, h190, h199, h207 — ICD-9/10 diagnoses</span></li>
+            <li><span class="var-name">Rx Medicines</span> <span class="var-desc">h160a, h168a, h178a, h188a, h197a, h206a — prescriptions</span></li>
+          </ul>
+        </div>
+        <div class="io-arrow">→</div>
+        <div class="io-box output">
+          <h4>Output</h4>
+          <ul class="var-list output">
+            <li><span class="var-name">Feature Matrix</span> <span class="var-desc">~60,602 patients × 24 Year 1 features</span></li>
+            <li><span class="var-name">RISK_TIER</span> <span class="var-desc">Target: 0=Stable, 1=Rising, 2=Shock</span></li>
+            <li><span class="var-name">IS_JUMPER</span> <span class="var-desc">Binary: low Y1 cost → top 10% Y2 cost</span></li>
+            <li><span class="var-name">COST_Y2_ADJ</span> <span class="var-desc">Inflation-adjusted Year 2 cost (final target)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h4 style="margin-top:16px; color:var(--accent);">Feature Groups</h4>
+      <table class="mini-table">
+        <thead><tr><th>Category</th><th>Variables</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td>Demographics</td><td><code>AGE_Y1, SEX, RACE, MARRY_Y1</code></td><td>4</td></tr>
+          <tr><td>Socioeconomic</td><td><code>POVCAT_Y1, INSCOV_Y1</code></td><td>2</td></tr>
+          <tr><td>Health Status</td><td><code>MNHLTH_RD1, RTHLTH_RD1</code></td><td>2</td></tr>
+          <tr><td>Chronic Conditions</td><td><code>DIAB_Y1_FLAG, HIBP_Y1_FLAG, CHOL_Y1_FLAG, CHRONIC_COUNT</code></td><td>4</td></tr>
+          <tr><td>Utilization</td><td><code>UTIL_ER_Y1, UTIL_IP_Y1, UTIL_OB_Y1, UTIL_RX_Y1</code></td><td>4</td></tr>
+          <tr><td>Condition Complexity</td><td><code>CNT_TOTAL_CONDITIONS, CNT_ILL_DEFINED</code></td><td>2</td></tr>
+          <tr><td>Medication</td><td><code>CNT_RX_Y1, POLYPHARMACY_FLAG, HAS_CARDIOVASCULAR_RX, HAS_CNS_RX, HAS_PAIN_RX</code></td><td>5</td></tr>
+          <tr><td>Derived</td><td><code>RATIO_ER_OFFICE, COST_Y1_ADJ, MNHLTH_CHANGE</code></td><td>3</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>Key processing steps:</strong> Panel harmonization (6 panels, 2013-2019) · ICD-9/ICD-10 auto-detection · CPI inflation adjustment to 2025 USD · Cohort filter (Age ≥ 18, exclude Y1 cancer) · K-Means + DBSCAN clustering for care phenotypes
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== STAGE 1 ==================== -->
+<div class="stage" id="stage1">
+  <div class="stage-header" onclick="toggleStage(this)">
+    <h2><span class="stage-badge badge-s1">Stage 1</span> Risk Tier Classification</h2>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="stage-body">
+    <div class="stage-content">
+      <div class="notebook-tag">5.1_modeling_stage1.ipynb</div>
+      <p class="desc"><strong>Purpose:</strong> Classify patients into risk tiers (Stable / Rising / Shock) and generate <strong>predicted probability distributions</strong> as latent factors for downstream models.</p>
+
+      <div class="io-row">
+        <div class="io-box input">
+          <h4>Input</h4>
+          <ul class="var-list input">
+            <li><span class="var-name">X</span> <span class="var-desc">24 Year 1 features from Stage 0</span></li>
+            <li><span class="var-name">RISK_TIER</span> <span class="var-desc">Target (0/1/2)</span></li>
+          </ul>
+        </div>
+        <div class="io-arrow">→</div>
+        <div class="io-box output">
+          <h4>Output (Latent Factors)</h4>
+          <ul class="var-list output">
+            <li><span class="var-name">PROB_STABLE</span> <span class="var-desc">P(patient stays low-cost)</span></li>
+            <li><span class="var-name">PROB_RISING</span> <span class="var-desc">P(moderate cost increase)</span></li>
+            <li><span class="var-name">PROB_SHOCK</span> <span class="var-desc">P(extreme cost spike)</span></li>
+            <li><span class="var-name">LATENT_RISK_SCORE</span> <span class="var-desc">0×P(S) + 1×P(R) + 2×P(Shock)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h4 style="margin-top:16px; color:var(--green);">Models Benchmarked</h4>
+      <table class="mini-table">
+        <thead><tr><th>Model</th><th>Macro F1</th><th>Weighted F1</th><th>ROC-AUC (OvR)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Logistic Regression</td><td>0.38</td><td>0.65</td><td>0.72</td><td>Baseline</td></tr>
+          <tr><td>Random Forest</td><td>0.43</td><td>0.68</td><td>0.76</td><td></td></tr>
+          <tr style="background:rgba(74,222,128,0.08);"><td><strong>XGBoost</strong></td><td><strong>0.45</strong></td><td><strong>0.70</strong></td><td><strong>0.78</strong></td><td>Selected ✓</td></tr>
+          <tr><td>GradientBoosting</td><td>0.44</td><td>0.69</td><td>0.77</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <div class="model-card">
+        <h4>XGBoost Classifier (Selected)</h4>
+        <p class="desc">Multi-class classification with softmax objective. Class weights applied to handle imbalanced tiers (Stable 75%, Rising 15%, Shock 10%).</p>
+        <div class="model-meta">
+          <span class="meta-chip">class_weight = balanced</span>
+          <span class="meta-chip">SHAP interpretation</span>
+          <span class="meta-chip">predict_proba → latent factors</span>
+        </div>
+      </div>
+
+      <div class="highlight">
+        <strong>Why classification first?</strong> Directly regressing cost is hard because the distribution is extreme. By first learning risk tiers, the model produces probability distributions (e.g., PROB_SHOCK=0.6) that encode rich information — even if two patients are both classified "Rising," their probability vectors differ and carry that nuance to Stage 2.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== STAGE 1.5 ==================== -->
+<div class="stage" id="stage15">
+  <div class="stage-header" onclick="toggleStage(this)">
+    <h2><span class="stage-badge badge-s15">Stage 1.5</span> Intermediate Latent Factor Models</h2>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="stage-body">
+    <div class="stage-content">
+      <div class="notebook-tag">5.2_stage1_5_and_stage2_modeling.ipynb</div>
+      <p class="desc"><strong>Purpose:</strong> Construct clinically interpretable intermediate variables, each capturing a distinct mechanism that drives healthcare costs. These become meta-features for Stage 2.</p>
+
+      <div class="substage-tabs">
+        <div class="substage-tab active" onclick="switchSubstage(this, 's15a')">1.5A Mental Health</div>
+        <div class="substage-tab" onclick="switchSubstage(this, 's15b')">1.5B Engagement</div>
+        <div class="substage-tab" onclick="switchSubstage(this, 's15c')">1.5C Undiagnosed</div>
+        <div class="substage-tab" onclick="switchSubstage(this, 's15d')">1.5D Escalation</div>
+        <div class="substage-tab" onclick="switchSubstage(this, 's15e')">1.5E Survival</div>
+      </div>
+
+      <!-- 1.5A -->
+      <div class="substage-content active" id="s15a">
+        <div class="model-card">
+          <h4>Stage 1.5A: Mental Health Trajectory</h4>
+          <div class="model-meta">
+            <span class="meta-chip">Logistic Regression</span>
+            <span class="meta-chip">cross_val_predict (5-fold)</span>
+            <span class="meta-chip">class_weight=balanced</span>
+          </div>
+          <p class="desc"><strong>Clinical rationale:</strong> Mental health decline often precedes cost escalation through reduced self-care, treatment non-adherence, and increased ER use.</p>
+        </div>
+        <div class="io-row">
+          <div class="io-box input">
+            <h4>Input Features</h4>
+            <ul class="var-list input">
+              <li><span class="var-name">AGE_Y1, SEX</span></li>
+              <li><span class="var-name">MNHLTH_RD1, RTHLTH_RD1</span> <span class="var-desc">Baseline health</span></li>
+              <li><span class="var-name">CHRONIC_COUNT</span> <span class="var-desc">Comorbidity burden</span></li>
+              <li><span class="var-name">CNT_TOTAL_CONDITIONS</span></li>
+              <li><span class="var-name">UTIL_ER_Y1, UTIL_OB_Y1</span></li>
+              <li><span class="var-name">CNT_RX_Y1, POLYPHARMACY_FLAG</span></li>
+              <li><span class="var-name">POVCAT_Y1, INSCOV_Y1</span></li>
+            </ul>
+          </div>
+          <div class="io-arrow">→</div>
+          <div class="io-box output">
+            <h4>Output</h4>
+            <ul class="var-list output">
+              <li><span class="var-name">PROB_MH_DECLINE</span> <span class="var-desc">P(mental health worsens Y1→Y2)</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">Target: MH_DECLINED = 1 if (MNHLTH_RD5 - MNHLTH_RD1) > 0 else 0
+Model:  LogisticRegression(class_weight='balanced')
+Output: cross_val_predict(method='predict_proba')[:, 1]</div>
+      </div>
+
+      <!-- 1.5B -->
+      <div class="substage-content" id="s15b">
+        <div class="model-card">
+          <h4>Stage 1.5B: Healthcare Engagement Score</h4>
+          <div class="model-meta">
+            <span class="meta-chip">Direct Calculation</span>
+            <span class="meta-chip">No ML model needed</span>
+            <span class="meta-chip">Range: [-1, +1]</span>
+          </div>
+          <p class="desc"><strong>Clinical rationale:</strong> Care-seeking behavior (proactive office visits vs. crisis-driven ER) strongly influences cost structure. This is directly observable from Y1 data.</p>
+        </div>
+        <div class="io-row">
+          <div class="io-box input">
+            <h4>Input Features</h4>
+            <ul class="var-list input">
+              <li><span class="var-name">UTIL_OB_Y1</span> <span class="var-desc">Office visits (positive signal)</span></li>
+              <li><span class="var-name">UTIL_ER_Y1</span> <span class="var-desc">ER visits (negative signal)</span></li>
+              <li><span class="var-name">UTIL_IP_Y1</span> <span class="var-desc">Inpatient stays (negative signal)</span></li>
+            </ul>
+          </div>
+          <div class="io-arrow">→</div>
+          <div class="io-box output">
+            <h4>Output</h4>
+            <ul class="var-list output">
+              <li><span class="var-name">ENGAGEMENT_SCORE</span> <span class="var-desc">+1=Proactive, -1=Crisis-mode</span></li>
+              <li><span class="var-name">PROB_CRISIS_MODE</span> <span class="var-desc">sigmoid(−ENGAGEMENT × 3)</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">er_dep  = ER / (ER + Office + 1)
+ip_int  = normalize(IP_visits, cap=5)
+ob_eng  = normalize(Office_visits, cap=P90)
+
+ENGAGEMENT_SCORE = normalize_to_[-1,1]( ob_eng - er_dep - 0.5 × ip_int )</div>
+      </div>
+
+      <!-- 1.5C -->
+      <div class="substage-content" id="s15c">
+        <div class="model-card">
+          <h4>Stage 1.5C: Undiagnosed Condition Risk ("Jumper" Detection)</h4>
+          <div class="model-meta">
+            <span class="meta-chip">RandomForestClassifier</span>
+            <span class="meta-chip">cross_val_predict (5-fold)</span>
+            <span class="meta-chip">class_weight='balanced'</span>
+          </div>
+          <p class="desc"><strong>Clinical rationale:</strong> "Hidden Risers" appear healthy in Y1 but have undiagnosed conditions that manifest in Y2. Ill-defined symptom codes (ICD R-codes) and frequent visits without clear diagnoses are warning signs.</p>
+        </div>
+        <div class="io-row">
+          <div class="io-box input">
+            <h4>Input Features</h4>
+            <ul class="var-list input">
+              <li><span class="var-name">CNT_ILL_DEFINED</span> <span class="var-desc">Key: vague symptom codes</span></li>
+              <li><span class="var-name">CNT_TOTAL_CONDITIONS</span></li>
+              <li><span class="var-name">UTIL_OB_Y1, UTIL_ER_Y1</span></li>
+              <li><span class="var-name">MNHLTH_RD1, RTHLTH_RD1</span></li>
+              <li><span class="var-name">CHRONIC_COUNT, CNT_RX_Y1</span></li>
+              <li><span class="var-name">AGE_Y1, SEX, COST_Y1_ADJ</span></li>
+            </ul>
+          </div>
+          <div class="io-arrow">→</div>
+          <div class="io-box output">
+            <h4>Output</h4>
+            <ul class="var-list output">
+              <li><span class="var-name">PROB_UNDIAGNOSED</span> <span class="var-desc">P(patient is a "Jumper")</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">Target: IS_JUMPER = 1 if (COST_Y1 &lt; median) AND (COST_Y2 in top 10%)
+Model:  RandomForestClassifier(n_estimators=200, class_weight='balanced')
+Output: cross_val_predict(method='predict_proba')[:, 1]</div>
+      </div>
+
+      <!-- 1.5D -->
+      <div class="substage-content" id="s15d">
+        <div class="model-card">
+          <h4>Stage 1.5D: Cost Escalation Pattern Score</h4>
+          <div class="model-meta">
+            <span class="meta-chip">Direct Calculation</span>
+            <span class="meta-chip">Weighted Composite</span>
+            <span class="meta-chip">Range: [0, 1]</span>
+          </div>
+          <p class="desc"><strong>Clinical rationale:</strong> Combines multiple clinical risk indicators into a single escalation score. Each component captures a different dimension of worsening health.</p>
+        </div>
+        <div class="io-row">
+          <div class="io-box input">
+            <h4>Input Components</h4>
+            <ul class="var-list input">
+              <li><span class="var-name">CHRONIC_COUNT</span> <span class="var-desc">Comorbidity burden</span></li>
+              <li><span class="var-name">CNT_ILL_DEFINED</span> <span class="var-desc">Diagnostic uncertainty</span></li>
+              <li><span class="var-name">UTIL_IP_Y1</span> <span class="var-desc">Hospitalization intensity</span></li>
+              <li><span class="var-name">POLYPHARMACY_FLAG</span> <span class="var-desc">Medication complexity</span></li>
+            </ul>
+          </div>
+          <div class="io-arrow">→</div>
+          <div class="io-box output">
+            <h4>Output</h4>
+            <ul class="var-list output">
+              <li><span class="var-name">ESCALATION_SCORE</span> <span class="var-desc">Mean of 4 normalized components</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">ESCALATION_SCORE = ( norm(CHRONIC_COUNT) + norm(CNT_ILL_DEFINED) 
+                        + norm(UTIL_IP_Y1) + POLYPHARMACY_FLAG ) / 4</div>
+      </div>
+
+      <!-- 1.5E -->
+      <div class="substage-content" id="s15e">
+        <div class="model-card">
+          <h4>Stage 1.5E: Treatment Discontinuation (Survival Analysis)</h4>
+          <div class="model-meta">
+            <span class="meta-chip">Cox Proportional Hazards</span>
+            <span class="meta-chip">lifelines library</span>
+            <span class="meta-chip">Kaplan-Meier validation</span>
+          </div>
+          <p class="desc"><strong>Clinical rationale:</strong> Medication discontinuation patterns (captured via time-to-event modeling) reflect patient adherence behavior and health trajectory — signals not available from cross-sectional features.</p>
+        </div>
+        <div class="io-row">
+          <div class="io-box input">
+            <h4>Input</h4>
+            <ul class="var-list input">
+              <li><span class="var-name">TIME_TO_EVENT</span> <span class="var-desc">Months from first to last Rx fill</span></li>
+              <li><span class="var-name">EVENT_DISCONTINUE</span> <span class="var-desc">1 = stopped filling prescriptions</span></li>
+              <li><span class="var-name">AGE, SEX, CHRONIC_COUNT</span></li>
+              <li><span class="var-name">CNT_RX_Y1, MNHLTH_RD1, RTHLTH_RD1</span></li>
+              <li><span class="var-name">POVCAT_Y1, INSCOV_Y1</span></li>
+            </ul>
+          </div>
+          <div class="io-arrow">→</div>
+          <div class="io-box output">
+            <h4>Output</h4>
+            <ul class="var-list output">
+              <li><span class="var-name">HAZARD_DISCONTINUE</span> <span class="var-desc">exp(β·X): relative hazard score</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">Cox Model: h(t|X) = h₀(t) × exp(β₁·AGE + β₂·CHRONIC + ... + βₚ·Xₚ)
+HAZARD_DISCONTINUE = exp(β·X)
+  = 1.0 → baseline risk
+  > 1.0 → higher discontinuation risk
+  < 1.0 → lower discontinuation risk</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== STAGE 2 ==================== -->
+<div class="stage" id="stage2">
+  <div class="stage-header" onclick="toggleStage(this)">
+    <h2><span class="stage-badge badge-s2">Stage 2</span> Final Expenditure Prediction (Tweedie Regression)</h2>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="stage-body">
+    <div class="stage-content">
+      <div class="notebook-tag">5.2_stage1_5_and_stage2_modeling.ipynb</div>
+      <p class="desc"><strong>Purpose:</strong> Predict Year 2 healthcare costs using the full feature set — original Year 1 features plus all latent factors from Stage 1 and Stage 1.5.</p>
+
+      <div class="io-row">
+        <div class="io-box input">
+          <h4>Input Features (30 Total)</h4>
+          <ul class="var-list input">
+            <li><span class="var-name">21 Original Features</span> <span class="var-desc">Demographics, health, utilization, medication, cost</span></li>
+            <li><span class="var-name">PROB_STABLE</span> <span class="var-desc">from Stage 1</span></li>
+            <li><span class="var-name">PROB_RISING</span> <span class="var-desc">from Stage 1</span></li>
+            <li><span class="var-name">PROB_SHOCK</span> <span class="var-desc">from Stage 1</span></li>
+            <li><span class="var-name">LATENT_RISK_SCORE</span> <span class="var-desc">from Stage 1</span></li>
+            <li><span class="var-name">PROB_MH_DECLINE</span> <span class="var-desc">from Stage 1.5A</span></li>
+            <li><span class="var-name">ENGAGEMENT_SCORE</span> <span class="var-desc">from Stage 1.5B</span></li>
+            <li><span class="var-name">PROB_CRISIS_MODE</span> <span class="var-desc">from Stage 1.5B</span></li>
+            <li><span class="var-name">PROB_UNDIAGNOSED</span> <span class="var-desc">from Stage 1.5C</span></li>
+            <li><span class="var-name">ESCALATION_SCORE</span> <span class="var-desc">from Stage 1.5D</span></li>
+            <li><span class="var-name">HAZARD_DISCONTINUE</span> <span class="var-desc">from Stage 1.5E</span></li>
+          </ul>
+        </div>
+        <div class="io-arrow">→</div>
+        <div class="io-box output">
+          <h4>Output</h4>
+          <ul class="var-list output">
+            <li><span class="var-name">PREDICTED_COST_Y2</span> <span class="var-desc">Predicted Year 2 healthcare expenditure ($)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <h4>Tweedie Regression (GLM with Log Link)</h4>
+        <p class="desc">The Tweedie distribution (compound Poisson-Gamma) is specifically suited for healthcare cost data: it handles <strong>zero-inflation</strong> (many patients with near-zero costs), <strong>right skewness</strong> (few patients with extreme costs), and <strong>continuous non-negative</strong> values — all in a single model.</p>
+        <div class="model-meta">
+          <span class="meta-chip">link = log</span>
+          <span class="meta-chip">power ∈ {1.2, 1.5, 1.8}</span>
+          <span class="meta-chip">alpha ∈ {0.01, 0.1, 1.0, 10.0}</span>
+          <span class="meta-chip">GridSearchCV (3-fold)</span>
+          <span class="meta-chip">StandardScaler preprocessing</span>
+        </div>
+      </div>
+
+      <div class="formula">E[Y|X] = exp(β₀ + β₁·X₁ + ... + β₃₀·X₃₀)
+
+Var[Y|X] = φ · E[Y|X]^p    where p ∈ (1, 2)
+
+  p = 1  → Poisson (count data)
+  p = 2  → Gamma (positive continuous)
+  1 < p < 2  → Compound Poisson-Gamma (zero-inflated continuous) ← Our case</div>
+
+      <div class="highlight">
+        <strong>Data Split:</strong> Stratified by MEPS Panel (temporal) — 70% train / 20% validation / 10% test. This simulates real-world deployment where the model is trained on historical data and tested on future patients.
+      </div>
+
+      <h4 style="margin-top:16px; color:var(--red);">Evaluation Metrics</h4>
+      <table class="mini-table">
+        <thead><tr><th>Metric</th><th>What It Measures</th></tr></thead>
+        <tbody>
+          <tr><td>MAE</td><td>Average dollar error (interpretable)</td></tr>
+          <tr><td>RMSE</td><td>Root mean squared error (penalizes large errors)</td></tr>
+          <tr><td>R²</td><td>Proportion of variance explained</td></tr>
+          <tr><td>MAE by Tier</td><td>Error breakdown: Stable vs Rising vs Shock</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ROBUSTNESS ==================== -->
+<div class="robustness">
+  <h2 style="color:var(--accent); margin-bottom:4px;">How Multi-Stage Improves Robustness</h2>
+  <p class="desc">Compared to a single-stage model that directly predicts cost from raw features:</p>
+  <div class="rob-grid">
+    <div class="rob-card">
+      <div class="rob-icon">🧩</div>
+      <h4 style="color:var(--accent);">Complexity Decomposition</h4>
+      <p>Each sub-model focuses on one clinical mechanism. Easier to learn, debug, and validate than forcing a single model to capture everything at once.</p>
+    </div>
+    <div class="rob-card">
+      <div class="rob-icon">📊</div>
+      <h4 style="color:var(--green);">Information Enrichment</h4>
+      <p>Stage 2 sees processed signals (PROB_SHOCK=0.6) instead of raw features (ER_VISITS=3). Latent factors compress complex patterns into high-level features.</p>
+    </div>
+    <div class="rob-card">
+      <div class="rob-icon">🔒</div>
+      <h4 style="color:var(--orange);">Leakage Prevention</h4>
+      <p>Out-of-fold predictions (cross_val_predict) ensure latent factors don't contain training-set information. Temporal split validates on future data.</p>
+    </div>
+    <div class="rob-card">
+      <div class="rob-icon">🔍</div>
+      <h4 style="color:var(--purple);">Clinical Interpretability</h4>
+      <p>Each latent factor has clinical meaning. You can trace WHY a patient is predicted high-cost: mental health? engagement? undiagnosed risk?</p>
+    </div>
+    <div class="rob-card">
+      <div class="rob-icon">⚖️</div>
+      <h4 style="color:var(--pink);">Imbalance Handling</h4>
+      <p>Rare events (Shock ~10%, Jumpers ~2%) are modeled separately with balanced class weights, amplifying weak signals before they reach Stage 2.</p>
+    </div>
+    <div class="rob-card">
+      <div class="rob-icon">🔄</div>
+      <h4 style="color:var(--teal);">Methodological Diversity</h4>
+      <p>Different stages use different approaches (classification, direct calculation, survival analysis, regression) — each suited to its specific sub-problem.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding:40px 0 20px; color:var(--muted); font-size:0.85rem;">
+  <p>MEPS Healthcare Cost Prediction &middot; ALY6980 Experiential Learning Project</p>
+  <p>Data: Medical Expenditure Panel Survey, Panels 18-23 (2013-2019)</p>
+  <p style="margin-top:8px;">Generated January 2026</p>
+</div>
+
+</div><!-- /container -->
+
+<script>
+function toggleStage(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+function scrollToStage(id) {
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function switchSubstage(tab, id) {
+  // Deactivate all tabs and content
+  tab.parentElement.querySelectorAll('.substage-tab').forEach(t => t.classList.remove('active'));
+  tab.closest('.stage-content').querySelectorAll('.substage-content').forEach(c => c.classList.remove('active'));
+  // Activate selected
+  tab.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// Open first stage by default
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('stage0').classList.add('open');
+});
+</script>
+
+</body>
+</html>

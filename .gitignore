@@ -39,3 +39,16 @@ data/processed/*
 
 # Mac
 .DS_Store
+
+# Archive (legacy code - kept for reference)
+archive_v1/
+
+# Temporary Office files
+~$*
+
+# Processed data (can be regenerated)
+data/processed_v2/*.parquet
+
+# Virtual environment
+.venv/
+venv/
