@@ -52,3 +52,6 @@ data/processed_v2/*.parquet
 # Virtual environment
 .venv/
 venv/
+
+# data
+/Users/duanduan/Documents/NEU/ALY6980/healthcare_repo/data
