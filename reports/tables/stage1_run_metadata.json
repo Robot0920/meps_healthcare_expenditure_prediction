@@ -1,0 +1,16 @@
+{
+  "version": "stage1_decisionlayer_v2026_03_17_r1",
+  "saved_at_utc": "2026-03-19T21:19:33.964706",
+  "selected_pipeline": "Hierarchical",
+  "selected_model_name": "Hierarchical(LevelKnown+DirectionRF)",
+  "rows": 60602,
+  "n_columns": 73,
+  "cv_scheme_oof": "GroupKFold(n_splits=5, group=PANEL)",
+  "has_policy_template": true,
+  "policy_template": {
+    "source_experiment": "Baseline_Selected_HardOnly",
+    "thresholds": {},
+    "tau_maxprob": 0.0,
+    "tau_margin": 0.0
+  }
+}

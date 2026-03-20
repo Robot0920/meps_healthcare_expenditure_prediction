@@ -1,0 +1,5 @@
+Model,Strategy,Accuracy,F1 (Macro),F1 (Weighted),ROC-AUC (OvR),RunVersion,SelectedPipeline,SelectedModelName,MajorityBaselineAccuracy
+Random Forest,Global-10Class,0.4917925147734734,0.4366474810858624,0.4868056396299312,0.9210612188427055,stage1_decisionlayer_v2026_03_17_r1,Hierarchical,Hierarchical(LevelKnown+DirectionRF),0.21492667979864302
+Hierarchical(LevelKnown+DirectionRF),Hierarchical,0.49233968045524185,0.4348544054199701,0.4866741730994382,0.921852522396639,stage1_decisionlayer_v2026_03_17_r1,Hierarchical,Hierarchical(LevelKnown+DirectionRF),0.21492667979864302
+XGBoost,Global-10Class,0.5300941124972641,0.40098119992804315,0.4853201622739559,0.9229795764210356,stage1_decisionlayer_v2026_03_17_r1,Hierarchical,Hierarchical(LevelKnown+DirectionRF),0.21492667979864302
+Logistic Regression,Global-10Class,0.4323703217334209,0.37372392784177294,0.4279953080526615,0.8872856114931731,stage1_decisionlayer_v2026_03_17_r1,Hierarchical,Hierarchical(LevelKnown+DirectionRF),0.21492667979864302

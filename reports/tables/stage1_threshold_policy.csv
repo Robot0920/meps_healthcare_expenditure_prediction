@@ -1,0 +1,2 @@
+Experiment,Scenario,threshold_low_jumper,threshold_high_escalate,tau_maxprob,tau_margin,Low_Jumper_Precision_Val,Low_Jumper_Recall_Val,High_Escalate_Precision_Val,High_Escalate_Recall_Val,Abstain_Rate_Val,Calibrator
+Global_Calibrated,Balanced,0.3451906532049179,0.07533163015180158,0.28,0.03,0.24662162162162163,0.4783748361730013,0.21858638743455497,0.9303621169916435,0.07197264106948546,isotonic
