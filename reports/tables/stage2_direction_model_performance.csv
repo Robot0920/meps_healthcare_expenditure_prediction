@@ -1,0 +1,2 @@
+DirectionModel,Accuracy,F1_Macro,Improve_Recall,Stable_Recall,Escalate_Recall
+Global_WeightedDirectionClassifier,0.5200262639527249,0.5107569961721627,0.8411214953271028,0.33004683263495194,0.4833748960931006

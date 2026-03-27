@@ -163,6 +163,50 @@ jupyter notebook notebooks/5.2_stage1_5_and_stage2_modeling.ipynb
 python src/export_repo_to_html.py
 ```
 
+### Run the Streamlit Dashboard Locally
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The Streamlit app reproduces the final decision dashboard with native Plotly charts and reads:
+
+- `data/processed_v2/model_ready_stage2.parquet`
+- `reports/tables/stage1_experiment_results.csv`
+- `reports/tables/stage2_*.csv`
+
+### Deploy to Streamlit Community Cloud
+
+This repository is already connected to GitHub at:
+
+- `https://github.com/Robot0920/meps_healthcare_expenditure_prediction`
+
+Deploy the app with these steps:
+
+1. Commit and push the Streamlit app plus its required data artifacts:
+   - `streamlit_app.py`
+   - `.streamlit/config.toml`
+   - `requirements.txt`
+   - `.gitignore`
+   - `scripts/build_decision_dashboard.py`
+   - `data/processed_v2/model_ready_stage2.parquet`
+   - `reports/tables/stage1_experiment_results.csv`
+   - `reports/tables/stage2_direct_strategy_comparison.csv`
+   - `reports/tables/stage2_direction_model_performance.csv`
+   - `reports/tables/stage2_direct_level_performance.csv`
+   - `reports/tables/stage2_direct_direction_group_performance.csv`
+   - `reports/tables/stage2_direct_feature_importance.csv`
+   - `reports/tables/stage2_feature_screening.csv`
+   - `reports/tables/stage2_direct_ablation.csv`
+2. Sign in to Streamlit Community Cloud and connect your GitHub account.
+3. Click `Create app`.
+4. Choose repository `Robot0920/meps_healthcare_expenditure_prediction`.
+5. Set the main file path to `streamlit_app.py`.
+6. Deploy and wait for the first build to finish.
+7. Share the resulting `https://...streamlit.app` link.
+
+If your repository is private, Streamlit Community Cloud can still deploy it after you grant private-repository access in GitHub.
+
 ---
 
 ## Data Sources

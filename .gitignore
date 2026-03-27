@@ -48,6 +48,7 @@ archive_v1/
 
 # Processed data (can be regenerated)
 data/processed_v2/*.parquet
+!data/processed_v2/model_ready_stage2.parquet
 
 # Virtual environment
 .venv/

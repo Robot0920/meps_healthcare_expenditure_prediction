@@ -1,0 +1,16 @@
+Feature,Corr_Y2_Cost,Corr_Delta,MaxAbsCorr_Base,MostCorrelatedBase,Decision,ClinicalRationale
+OFFICE_SHARE,0.0020347945448441866,-0.10891053533512399,0.2576999865057186,UTIL_OB_Y1,Drop,Weak incremental signal after engagement score and office visit counts.
+ADHERENCE_BURDEN,0.0016103589527490937,0.09703611422628812,0.37614364387261245,CHRONIC_COUNT,Drop,Adds little beyond raw gap ratio and chronic burden.
+TRAILING_GAP_BURDEN,0.03958183423144162,0.06426885597261646,0.5810931002487322,CHRONIC_COUNT,Drop,Adds little beyond raw trailing gap and chronic burden.
+RX_REGULARITY,0.11546211931496364,-0.032810349469794574,0.31175275116555906,CNT_TOTAL_CONDITIONS,Keep,Irregular refill spacing; captures erratic medication use.
+RX_TIMELINE_IMPUTED,-0.18259249983311931,0.09176246085317574,0.3974052097908262,CNT_TOTAL_CONDITIONS,Keep,Coverage flag for missing Rx timeline; prevents silent bias.
+RX_GAP_RATIO,-0.14208604741303588,0.12506968498089732,0.40089792072190134,CNT_TOTAL_CONDITIONS,Keep,Medication disruption proxy; long gaps may indicate adherence risk.
+RX_TRAILING_GAP,-0.165883830833591,0.09389437178889633,0.45682671404398173,CNT_TOTAL_CONDITIONS,Keep,Late-year refill drop-off; may signal disengagement before Year 2.
+LOG_COST_Y1,0.27203894124216216,-0.3247884199539706,0.4916805468222188,CNT_TOTAL_CONDITIONS,Keep,Nonlinear baseline spend effect without letting raw cost dominate linearly.
+RX_PER_CONDITION,0.20574906749036642,0.033850822529040175,0.5455792799810132,CNT_RX_Y1,Keep,Medication burden normalized by condition count.
+RX_DENSITY,0.19940774346380305,-0.10858105092172617,0.5739592826954314,CNT_TOTAL_CONDITIONS,Keep,Medication continuity proxy; more filled months suggests steadier treatment.
+COST_PER_CONDITION,0.18812985813786787,-0.15810407156357636,0.6131309693561106,COST_Y1_ADJ,Keep,Baseline cost normalized by recorded disease burden.
+ENGAGEMENT_SCORE,0.23450337306173064,-0.05830027833421335,0.6360854496342293,UTIL_OB_Y1,Keep,"Care pattern proxy: higher = office-centered, lower = crisis-oriented."
+ACUTE_SHARE,-0.016436346083342473,-0.19801240036787726,0.6469111131567821,RATIO_ER_OFFICE,Keep,Share of acute care in total utilization; higher implies ER/IP dependence.
+RX_COST_PER_FILL,0.1960716562330326,-0.025226591720559945,0.6895296911826428,TOTAL_RX_COST_Y1,Keep,Average spend per pharmacy fill; proxy for specialty-drug intensity.
+IP_FLAG,0.15077783601733688,-0.298634893312004,0.838845733762293,UTIL_IP_Y1,Keep,Any inpatient use in Year 1; coarse marker for severe acute events.
